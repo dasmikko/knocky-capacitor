@@ -6,8 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "android:dev": "ionic cap run android --livereload --external",
     "ionic:build": "npm run build",
-    "ionic:serve": "vite serve"
+    "ionic:serve": "vite"
   },
   "dependencies": {
     "@capacitor/android": "3.6.0",

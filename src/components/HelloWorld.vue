@@ -1,18 +1,25 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 defineProps({
   msg: String
 })
 
 const count = ref(0)
+
+watch(
+  count,
+  (newVal, oldVal) => {
+    console.log(newVal)
+  }
+)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <p>
-    Recommended IDE setup:
+    Recommended IDE setup: Knocky
     <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
     +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>

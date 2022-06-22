@@ -2,5 +2,6 @@
 	"appId": "vite.project",
 	"appName": "vite-project",
 	"webDir": "dist",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh"
 }
