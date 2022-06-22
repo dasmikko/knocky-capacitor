@@ -7,10 +7,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "android:dev": "ionic cap run android --livereload --external",
+    "android:prod": "ionic cap run android --prod",
     "ionic:build": "npm run build",
     "ionic:serve": "vite"
   },
   "dependencies": {
+    "@awesome-cordova-plugins/http": "^5.43.0",
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
     "@capacitor/cli": "3.6.0",
@@ -20,6 +22,9 @@
     "@capacitor/status-bar": "1.0.8",
     "@ionic/vue": "^6.1.10",
     "@ionic/vue-router": "^6.1.10",
+    "axios": "^0.27.2",
+    "cordova-plugin-advanced-http": "^3.3.1",
+    "pinia": "^2.0.14",
     "vite-plugin-pages": "^0.24.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.16"

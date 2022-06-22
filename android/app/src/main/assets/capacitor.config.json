@@ -3,8 +3,5 @@
 	"appName": "vite-project",
 	"webDir": "dist",
 	"bundledWebRuntime": false,
-	"linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh",
-	"server": {
-		"url": "http://192.168.1.106:8102"
-	}
+	"linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh"
 }
