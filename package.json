@@ -18,9 +18,14 @@
     "@capacitor/haptics": "1.1.4",
     "@capacitor/keyboard": "1.2.3",
     "@capacitor/status-bar": "1.0.8",
-    "vue": "^3.2.25"
+    "@ionic/vue": "^6.1.10",
+    "@ionic/vue-router": "^6.1.10",
+    "vite-plugin-pages": "^0.24.2",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@ionic/cli": "6.20.1",
     "@vitejs/plugin-vue": "^2.3.3",
     "vite": "^2.9.9"
   }
