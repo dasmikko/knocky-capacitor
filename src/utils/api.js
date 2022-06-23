@@ -1,18 +1,26 @@
 import axios from "axios"
-import { HTTP } from '@awesome-cordova-plugins/http';
+import { Http } from '@capacitor-community/http';
 
-const http = new HTTP()
-
-function KnockoutApiCall(url, options = {}) {
+function KnockoutApiCall(type, options = {}) {
   return new Promise( (resolve, reject) => {
     const baseUrl = 'https://api.knockout.chat'
 
-    http.get(baseUrl + url).then(response => {
-      resolve(reponse.data)
+    let mergedOptions = {
+      ...options
+    }
+
+    mergedOptions.url = baseUrl + options.url
+
+    console.log(mergedOptions)
+
+    Http.get(mergedOptions).then(response => {
+      resolve(response.data)
     }).catch(reason => reject(reason))
   })
 }
 
 export function getSubforum (username, password) {
-  return KnockoutApiCall('/subforum', 'get')
+  return KnockoutApiCall('get', {
+    url: '/subforum'
+  })
 }

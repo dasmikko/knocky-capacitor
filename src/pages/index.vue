@@ -55,7 +55,7 @@ export default {
       content-id="main-content">
         <ion-header>
           <ion-toolbar translucent>
-            <ion-title>Menu</ion-title>
+            <ion-title>BOO!</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -68,7 +68,7 @@ export default {
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Back Button</ion-title>
+        <ion-title>Knocky</ion-title>
       </ion-toolbar>
     </ion-header>
     
