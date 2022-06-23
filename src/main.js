@@ -20,6 +20,8 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
+import './assets/themes/dark.scss'
+
 
 const router = createRouter({
   history: createWebHistory(),
