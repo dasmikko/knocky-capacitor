@@ -1,6 +1,57 @@
+<template>
+  <ion-page>
+    <ion-menu
+      maxEdgeStart="20"
+      side="start"
+      content-id="main-content">
+      <ion-header>
+        <ion-toolbar translucent>
+          <ion-title>BOO!</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        Drawer
+      </ion-content>
+    </ion-menu>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Knocky</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="main-content">
+
+      <p class="mb-9">Hello</p>
+
+      <ul>
+        <li v-for="item in items">
+          {{item.name}}
+        </li>
+      </ul>
+
+      <ion-button @click="router.push('/login')">Login</ion-button>
+      <ion-button @click="onClick">Go to another page</ion-button>
+    </ion-content>
+  </ion-page>
+</template>
+
 
 <script>
-import { useBackButton, useIonRouter, IonMenu, IonMenuButton, IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonButton } from '@ionic/vue';
+import {
+  IonMenu,
+  IonMenuButton,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonButton } from '@ionic/vue';
 import { App } from '@capacitor/app';
 import HelloWorld from '../components/HelloWorld.vue'
 import { useRouter } from 'vue-router';
@@ -37,9 +88,12 @@ export default {
       const fetchedItems = await getSubforum()
       items.value = fetchedItems.list
       console.log(items.value)
+
+      console.log('cookies', window.location)
     })
 
     return {
+      router,
       onClick,
       items
     }
@@ -47,45 +101,7 @@ export default {
 }
 </script>
 
-<template>
-  <ion-page>
-    <ion-menu 
-      maxEdgeStart="20"
-      side="start" 
-      content-id="main-content">
-        <ion-header>
-          <ion-toolbar translucent>
-            <ion-title>BOO!</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          Drawer
-        </ion-content>
-      </ion-menu>
 
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Knocky</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    
-    <ion-content id="main-content">
-      
-      <p class="mb-9">Hello</p>
-
-      <ul>
-        <li v-for="item in items">
-          {{item.name}}
-        </li>
-      </ul>
-
-      <ion-button @click="onClick">Go to another page</ion-button>
-    </ion-content>
-  </ion-page>
-</template>
 
 <style>
 
