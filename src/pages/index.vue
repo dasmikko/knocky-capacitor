@@ -73,6 +73,9 @@ export default {
     </ion-header>
     
     <ion-content id="main-content">
+      
+      <p class="mb-9">Hello</p>
+
       <ul>
         <li v-for="item in items">
           {{item.name}}

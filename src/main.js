@@ -4,6 +4,8 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import routes from "virtual:generated-pages";
 import App from './App.vue';
 
+import './assets/tailwind.css'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
