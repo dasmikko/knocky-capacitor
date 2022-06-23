@@ -47,11 +47,12 @@ export default {
   },
   setup () {
     const onClickLogin = async () => {
-      const browser = await Browser.open({ url: 'https://knockout.chat/login' })
+      const browser = Browser
       console.log(browser)
-      browser.addListener('browserPageLoaded', () => {
-        console.log('tesst')
+      browser.addListener('browserPageLoaded', (data) => {
+        console.log('tesst', data)
       })
+      browser.open({ url: 'https://knockout.chat/login' })
       console.log('finish')
     }
 

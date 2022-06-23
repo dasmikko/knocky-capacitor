@@ -1,10 +1,11 @@
 {
   "appId": "vite.project",
-  "appName": "vite-project",
+  "appName": "Knocky Capacitor",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh",
   "server": {
-    "hostname": "knockout.chat"
+    "hostname": "knockout.chat",
+    "androidScheme": "knocky"
   }
 }

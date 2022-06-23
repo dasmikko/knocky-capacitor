@@ -27,6 +27,8 @@
 
       <p class="mb-9">Hello</p>
 
+      <a href="https://knockout.chat/login">test login</a>
+
       <ul>
         <li v-for="item in items">
           {{item.name}}

@@ -13,6 +13,8 @@
     "ionic:serve": "vite"
   },
   "dependencies": {
+    "@awesome-cordova-plugins/core": "^5.43.0",
+    "@awesome-cordova-plugins/in-app-browser": "^5.43.0",
     "@capacitor-community/http": "1.4.1",
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
@@ -25,6 +27,7 @@
     "@ionic/vue": "6.1.10",
     "@ionic/vue-router": "6.1.10",
     "axios": "0.27.2",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "pinia": "2.0.14",
     "vite-plugin-pages": "0.24.2",
     "vue": "3.2.37",
