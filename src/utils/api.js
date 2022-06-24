@@ -19,7 +19,26 @@ function KnockoutApiCall(type, options = {}) {
   })
 }
 
-export function getSubforum (username, password) {
+function KnockoutApiCall2(type, options = {}) {
+  return new Promise( (resolve, reject) => {
+    const baseUrl = 'https://api.knockout.chat'
+
+    let mergedOptions = {
+      method: 'get',
+      ...options
+    }
+
+    mergedOptions.url = baseUrl + options.url
+
+    console.log(mergedOptions)
+
+    axios.get(mergedOptions.url).then(response => {
+      resolve(response.data)
+    }).catch(reason => reject(reason))
+  })
+}
+
+export function getSubforum () {
   return KnockoutApiCall('get', {
     url: '/subforum'
   })

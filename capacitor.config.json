@@ -6,6 +6,7 @@
   "linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh",
   "server": {
     "hostname": "knockout.chat",
-    "androidScheme": "knocky"
+    "androidScheme": "knocky",
+    "port": 8080
   }
 }
