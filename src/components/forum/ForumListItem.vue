@@ -2,10 +2,11 @@
   <div class="forum-list-item">
     <header class="p-2">
       {{item.name}}
+      <ChatBubbleIcon /> {{item.totalThreads}}
+      <ReplyAllIcon/> {{item.totalPosts}}
     </header>
     <section>
-      <ChatBubbleIcon />
-      <ReplyAllIcon/>
+      
     </section>
   </div>
 </template>
