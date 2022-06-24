@@ -23,25 +23,17 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="main-content">
+    <ion-content 
+      id="main-content">      
 
-      <p class="mb-9">Hello</p>
+      <ul class="p-4">
+        <li v-for="item in items">
+          <forum-list-item
+            :item="item"/>
+        </li>
+      </ul>
 
       <a href="https://knockout.chat/login">test login</a>
-
-      <ul>
-        <li v-for="item in items">
-          {{item.name}}
-        </li>
-      </ul>
-
-      <ul>
-        <li v-for="item in items">
-          {{item.name}}
-        </li>
-      </ul>
-
-      
 
 
       <ion-button @click="router.push('/login')">Login</ion-button>
@@ -69,6 +61,7 @@ import HelloWorld from '../components/HelloWorld.vue'
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getSubforum } from '../utils/api'
+import ForumListItem from '../components/forum/ForumListItem.vue';
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
@@ -85,7 +78,8 @@ export default {
     IonContent,
     IonButton,
     IonMenu,
-    IonMenuButton
+    IonMenuButton,
+    ForumListItem
 },
   setup () {
     const router = useRouter();
@@ -114,7 +108,6 @@ export default {
 </script>
 
 
-
-<style>
+<style lang="scss">
 
 </style>

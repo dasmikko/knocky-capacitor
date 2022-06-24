@@ -24,6 +24,11 @@
     "@capacitor/haptics": "1.1.4",
     "@capacitor/keyboard": "1.2.3",
     "@capacitor/status-bar": "1.0.8",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.1",
     "@ionic/vue": "6.1.10",
     "@ionic/vue-router": "6.1.10",
     "axios": "0.27.2",
@@ -31,6 +36,7 @@
     "pinia": "2.0.14",
     "vite-plugin-pages": "0.24.2",
     "vue": "3.2.37",
+    "vue-material-design-icons": "^5.0.0",
     "vue-router": "4.0.16"
   },
   "devDependencies": {
