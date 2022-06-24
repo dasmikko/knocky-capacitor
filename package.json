@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "android:dev": "ionic cap run android --livereload --external --port=8080",
+    "android:dev": "ionic cap run android --livereload --external -port=8080",
     "android:prod": "ionic cap run android --prod",
     "web:dev": "npx ionic serve --external -port=8080",
     "ionic:build": "npm run build",

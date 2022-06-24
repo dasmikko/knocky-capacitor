@@ -35,7 +35,17 @@
         </li>
       </ul>
 
+      <ul>
+        <li v-for="item in items">
+          {{item.name}}
+        </li>
+      </ul>
+
+      
+
+
       <ion-button @click="router.push('/login')">Login</ion-button>
+      <ion-button @click="router.push('/subpage')">Page</ion-button>
       <ion-button @click="onClick">Go to another page</ion-button>
     </ion-content>
   </ion-page>

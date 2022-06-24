@@ -1,9 +1,9 @@
 <template>
   <ion-page>
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar >
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+        <ion-back-button default-href="/"></ion-back-button>
       </ion-buttons>
       <ion-title>Login</ion-title>
     </ion-toolbar>
@@ -52,7 +52,7 @@ export default {
       browser.addListener('browserPageLoaded', (data) => {
         console.log('tesst', data)
       })
-      browser.open({ url: 'https://knockout.chat/login' })
+      browser.open({ url: 'https://api.knockout.chat/auth/google/login' })
       console.log('finish')
     }
 
