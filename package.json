@@ -34,6 +34,7 @@
     "axios": "0.27.2",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "pinia": "2.0.14",
+    "timeago.js": "^4.0.0-beta.3",
     "vite-plugin-pages": "0.24.2",
     "vue": "3.2.37",
     "vue-material-design-icons": "^5.0.0",

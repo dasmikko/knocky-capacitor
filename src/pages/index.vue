@@ -26,7 +26,7 @@
     <ion-content 
       id="main-content">      
 
-      <ul class="p-4">
+      <ul class="p-2">
         <li v-for="item in items">
           <forum-list-item
             :item="item"/>
