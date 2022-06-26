@@ -45,22 +45,12 @@
 
 
 <script>
-import {
-  IonMenu,
-  IonMenuButton,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
-  IonContent,
-  IonButton } from '@ionic/vue';
+
 import { App } from '@capacitor/app';
 import HelloWorld from '../components/HelloWorld.vue'
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getSubforum } from '../utils/api'
+import { getForum } from '../utils/api'
 import ForumListItem from '../components/forum/ForumListItem.vue';
 
 // This starter template is using Vue 3 <script setup> SFCs
@@ -68,17 +58,7 @@ import ForumListItem from '../components/forum/ForumListItem.vue';
 
 export default {
   components: {
-    IonPage,
     HelloWorld,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonButton,
-    IonMenu,
-    IonMenuButton,
     ForumListItem
 },
   setup () {
@@ -91,11 +71,9 @@ export default {
     }
 
     onMounted(async () => {
-      const fetchedItems = await getSubforum()
+      const fetchedItems = await getForum()
       items.value = fetchedItems.list
       console.log(items.value)
-
-      console.log('cookies', window.location)
     })
 
     return {

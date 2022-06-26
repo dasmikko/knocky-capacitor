@@ -22,6 +22,20 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
+/* Ionic components */
+import {
+  IonMenu,
+  IonMenuButton,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonButton,
+ } from '@ionic/vue';
+
 
 import './assets/themes/dark.scss'
 
@@ -37,6 +51,18 @@ const app = createApp(App)
 
 app.use(IonicVue)
 app.use(router);
+
+app.component('IonMenu', IonMenu)
+app.component('IonMenuButton', IonMenuButton)
+app.component('IonPage', IonPage)
+app.component('IonHeader', IonHeader)
+app.component('IonToolbar', IonToolbar)
+app.component('IonButtons', IonButtons)
+app.component('IonBackButton', IonBackButton)
+app.component('IonTitle', IonTitle)
+app.component('IonContent', IonContent)
+app.component('IonButton', IonButton)
+
 
 router.isReady().then(() => {
   app.mount('#app');

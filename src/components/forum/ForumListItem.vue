@@ -1,11 +1,11 @@
 <template>
   <div class="forum-list-item">
-    <header class="p-2 flex ion-activatable ripple-parent bg-neutral-800">
+    <header class="p-2 flex ion-activatable ripple-parent bg-neutral-800" @click="router.push(`/subforum/${item.id}`)">
       <div class="flex-1">
         <p class="text-lg font-bold">{{item.name}}</p>
         <div class="flex text-xs">
-          <div class="flex items-center mr-4"><ChatBubbleIcon size="14" class="mr-1" /> {{item.totalThreads}}</div>
-          <div class="flex items-center "><ReplyAllIcon size="14" class="mr-1"/> {{item.totalPosts}}</div>
+          <div class="flex items-center mr-4"><ChatBubbleIcon :size="14" class="mr-1" /> {{item.totalThreads}}</div>
+          <div class="flex items-center "><ReplyAllIcon :size="14" class="mr-1"/> {{item.totalPosts}}</div>
         </div>
       </div>
       <div class="flex items-center justify-end">
@@ -27,6 +27,7 @@ import ChatBubbleIcon from 'vue-material-design-icons/Chat.vue';
 import ReplyAllIcon from 'vue-material-design-icons/ReplyAll.vue';
 import * as timeago from 'timeago.js';
 import { computed } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
 
 export default {
   name: "ForumListItem",
@@ -39,12 +40,14 @@ export default {
     item: Object,
   },
   setup (props) {
+    const router = useRouter()
     const statsClasses = computed(() => {
       return ['id-'+props.item.id]
     })
 
 
     return {
+      router,
       timeago,
       statsClasses
     }

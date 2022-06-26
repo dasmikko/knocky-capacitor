@@ -38,8 +38,15 @@ function KnockoutApiCall2(type, options = {}) {
   })
 }
 
-export function getSubforum () {
+export function getForum () {
   return KnockoutApiCall('get', {
     url: '/subforum'
   })
 }
+
+export function getSubforum (id, page = 1) {
+  return KnockoutApiCall('get', {
+    url: `/subforum/${id}/${page}`
+  })
+}
+
