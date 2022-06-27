@@ -1,13 +1,11 @@
 <template>
-  <li>
-    <Schema
-      v-if="node.children.length"
-      v-for="(cnode, index) in node.children"
-      :index="index"
-      :node="cnode"
-    />
-    <span v-else>{{node.text}}</span>
-  </li>
+  <video 
+    id="video" 
+    class="my-4"
+    controls="" 
+    preload="metadata">
+    <source :src="url">
+  </video>
 </template>
 
 <script>
@@ -16,9 +14,9 @@ import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import { computed } from '@vue/reactivity';
 
 export default {
-  name: 'ListItemNode',
+  name: 'VideoNode',
   props: {
-    node: Object,
+    url: String,
   },
   setup(props) {
   }

@@ -1,13 +1,8 @@
 <template>
-  <li>
-    <Schema
-      v-if="node.children.length"
-      v-for="(cnode, index) in node.children"
-      :index="index"
-      :node="cnode"
-    />
-    <span v-else>{{node.text}}</span>
-  </li>
+  <a :href="node.shortcode.properties.href">
+    <template v-if="!node.shortcode.content">{{node.shortcode.properties.href}}</template>
+    <template v-else>{{node.shortcode.content}}</template>
+  </a>
 </template>
 
 <script>
@@ -16,9 +11,9 @@ import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import { computed } from '@vue/reactivity';
 
 export default {
-  name: 'ListItemNode',
+  name: 'URLNode',
   props: {
-    node: Object,
+    node: Object
   },
   setup(props) {
   }

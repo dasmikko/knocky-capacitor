@@ -1,5 +1,13 @@
 <template>
-  <strong>{{text}}</strong>
+  <strong>
+    <Schema
+      v-if="node.children.length"
+      v-for="(cnode, index) in node.children"
+      :index="index"
+      :node="cnode"
+    />
+    <span v-else>{{node.text}}</span>
+  </strong>
 </template>
 
 <script>
@@ -10,7 +18,7 @@ import { computed } from '@vue/reactivity';
 export default {
   name: 'BoldNode',
   props: {
-    text: String,
+    node: Object
   },
   setup(props) {
   }

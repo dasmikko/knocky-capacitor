@@ -25,7 +25,6 @@ import { computed } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { getIcon } from '../../utils/icons';
 import Username from '../shared/username.vue';
-import { b } from '../../../dist/assets/index.bb1b6b6d';
 
 export default {
   name: "ForumListItem",

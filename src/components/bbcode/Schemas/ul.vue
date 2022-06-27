@@ -1,8 +1,9 @@
 <template>
   <ul class="list-disc list-inside">
     <Schema
-      v-for="node in listItems"
-      :node="node"
+      v-for="(cnode, index) in listItems"
+      :index="index"
+      :node="cnode"
     />
   </ul>
 </template>

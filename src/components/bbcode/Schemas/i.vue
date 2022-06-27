@@ -1,13 +1,13 @@
 <template>
-  <li>
+  <i>
     <Schema
       v-if="node.children.length"
       v-for="(cnode, index) in node.children"
       :index="index"
       :node="cnode"
     />
-    <span v-else>{{node.text}}</span>
-  </li>
+    <template v-else>{{node.text}}</template>
+  </i>
 </template>
 
 <script>
@@ -16,9 +16,9 @@ import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import { computed } from '@vue/reactivity';
 
 export default {
-  name: 'ListItemNode',
+  name: 'ItalicNode',
   props: {
-    node: Object,
+    node: Object
   },
   setup(props) {
   }
