@@ -15,7 +15,7 @@
     </header>
     <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses">
       <p class="text-sm truncate text-ellipsis overflow-hidden">{{item.lastPost.thread.title}}</p>
-      <p class="text-sm text-neutral-400">Last post by <span class="text-blue-400">{{item.lastPost.user.username }}</span> {{timeago.format(item.lastPost.updatedAt)}}</p>
+      <p class="text-sm text-neutral-400">Last post by <Username :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
       <ion-ripple-effect></ion-ripple-effect>
     </section>
   </div>
@@ -28,14 +28,16 @@ import ReplyAllIcon from 'vue-material-design-icons/ReplyAll.vue';
 import * as timeago from 'timeago.js';
 import { computed } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
+import Username from '../shared/username.vue';
 
 export default {
   name: "ForumListItem",
   components: {
     IonRippleEffect,
     ChatBubbleIcon,
-    ReplyAllIcon
-  },
+    ReplyAllIcon,
+    Username
+},
   props: {
     item: Object,
   },

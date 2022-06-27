@@ -10,7 +10,10 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        Drawer
+        <a href="https://knockout.chat/login">test login</a>
+        <ion-button @click="router.push('/login')">Login</ion-button>
+        <ion-button @click="router.push('/subpage')">Page</ion-button>
+        <ion-button @click="onClick">Go to another page</ion-button>
       </ion-content>
     </ion-menu>
 
@@ -24,7 +27,10 @@
     </ion-header>
 
     <ion-content 
-      id="main-content">      
+      id="main-content">   
+      <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>   
 
       <ul class="p-2">
         <li v-for="item in items">
@@ -32,13 +38,6 @@
             :item="item"/>
         </li>
       </ul>
-
-      <a href="https://knockout.chat/login">test login</a>
-
-
-      <ion-button @click="router.push('/login')">Login</ion-button>
-      <ion-button @click="router.push('/subpage')">Page</ion-button>
-      <ion-button @click="onClick">Go to another page</ion-button>
     </ion-content>
   </ion-page>
 </template>
@@ -70,6 +69,12 @@ export default {
       router.push('/test')
     }
 
+    const doRefresh = async (event) => {
+      const fetchedItems = await getForum()
+      items.value = fetchedItems.list
+      event.target.complete();
+    }
+
     onMounted(async () => {
       const fetchedItems = await getForum()
       items.value = fetchedItems.list
@@ -79,7 +84,8 @@ export default {
     return {
       router,
       onClick,
-      items
+      items,
+      doRefresh
     }
   }
 }

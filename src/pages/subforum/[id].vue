@@ -11,6 +11,9 @@
 
     <ion-content 
       id="main-content">
+      <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       
       <template v-if="subforum">
         <div class="p-2">
@@ -20,8 +23,6 @@
           />
         </div>
       </template>
-      {{route.params.id}}
-      <a href="https://knockout.chat/login">test login</a>
     </ion-content>
   </ion-page>
 </template>
@@ -50,13 +51,18 @@ export default {
 
     onMounted(async () => {
       subforum.value = await getSubforum(route.params.id)
-      console.log(subforum.value)
     })
+
+    const doRefresh = async (event) => {
+      subforum.value = await getSubforum(route.params.id)
+      event.target.complete();
+    }
 
     return {
       router,
       route,
-      subforum
+      subforum,
+      doRefresh
     }
   }
 }

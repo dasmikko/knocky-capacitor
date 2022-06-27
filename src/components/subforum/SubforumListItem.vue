@@ -1,9 +1,13 @@
 <template>
   <div class="subforum-list-item ion-activatable ripple-parent">
     <div class="flex">
-      <img class="w-12 mr-4" :src="threadIconUrl" alt=""/>
-      <div class="flex flex-row">
-        <p>{{thread.title}}</p>
+      <div class="w-12 h-auto flex-shrink-0 mr-4 p-2 flex items-center bg-neutral-800">
+        <img class="max-w-full" :src="threadIconUrl" alt=""/>
+      </div>
+
+      <div class="flex flex-col py-2 pr-4">
+        <p class="text-sm mb-1">{{thread.title}}</p>
+        <p class="text-xs text-neutral-400"><username :user="thread.user"/></p>
       </div>
     </div>
     
@@ -20,14 +24,16 @@ import * as timeago from 'timeago.js';
 import { computed } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { getIcon } from '../../utils/icons';
+import Username from '../shared/username.vue';
 
 export default {
   name: "ForumListItem",
   components: {
     IonRippleEffect,
     ChatBubbleIcon,
-    ReplyAllIcon
-  },
+    ReplyAllIcon,
+    Username
+},
   props: {
     thread: Object,
   },
@@ -57,7 +63,7 @@ export default {
 
 <style lang="scss">
   .subforum-list-item {
-    @apply bg-neutral-900 rounded p-4 mb-2 overflow-hidden;
+    @apply bg-neutral-900 rounded mb-2 overflow-hidden;
   }
 
   .ripple-parent {

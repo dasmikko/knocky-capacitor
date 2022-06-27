@@ -34,6 +34,8 @@ import {
   IonTitle,
   IonContent,
   IonButton,
+  IonRefresher,
+  IonRefresherContent
  } from '@ionic/vue';
 
 
@@ -62,6 +64,8 @@ app.component('IonBackButton', IonBackButton)
 app.component('IonTitle', IonTitle)
 app.component('IonContent', IonContent)
 app.component('IonButton', IonButton)
+app.component('IonRefresher', IonRefresher)
+app.component('IonRefresherContent', IonRefresherContent)
 
 
 router.isReady().then(() => {
