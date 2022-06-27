@@ -38,6 +38,8 @@ import {
   IonRefresherContent
  } from '@ionic/vue';
 
+ import Schema from './components/bbcode/schema.vue'
+
 
 import './assets/themes/dark.scss'
 
@@ -66,6 +68,8 @@ app.component('IonContent', IonContent)
 app.component('IonButton', IonButton)
 app.component('IonRefresher', IonRefresher)
 app.component('IonRefresherContent', IonRefresherContent)
+
+app.component('Schema', Schema)
 
 
 router.isReady().then(() => {

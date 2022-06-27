@@ -4,5 +4,7 @@
 	"webDir": "dist",
 	"bundledWebRuntime": false,
 	"linuxAndroidStudioPath": "/home/mjensen/android-studio/bin/studio.sh",
-	"server": {}
+	"server": {
+		"port": 8080
+	}
 }

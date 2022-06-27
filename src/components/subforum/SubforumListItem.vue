@@ -1,5 +1,5 @@
 <template>
-  <div class="subforum-list-item ion-activatable ripple-parent">
+  <div class="subforum-list-item ion-activatable ripple-parent" @click="onClick">
     <div class="flex">
       <div class="w-12 h-auto flex-shrink-0 mr-4 p-2 flex items-center bg-neutral-800">
         <img class="max-w-full" :src="threadIconUrl" alt=""/>
@@ -25,6 +25,7 @@ import { computed } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { getIcon } from '../../utils/icons';
 import Username from '../shared/username.vue';
+import { b } from '../../../dist/assets/index.bb1b6b6d';
 
 export default {
   name: "ForumListItem",
@@ -39,9 +40,6 @@ export default {
   },
   setup (props) {
     const router = useRouter()
-    const statsClasses = computed(() => {
-      return ['id-'+props.item.id]
-    })
 
     const threadIconUrl = computed(() => {
       const url = getIcon(props.thread.iconId).url
@@ -49,12 +47,16 @@ export default {
       return url
     })
 
+    const onClick = () => {
+      router.push(`/thread/${props.thread.id}`)
+    }
+
 
     return {
       router,
       timeago,
-      statsClasses,
       getIcon,
+      onClick,
       threadIconUrl
     }
   }

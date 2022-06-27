@@ -11,8 +11,6 @@ function KnockoutApiCall(type, options = {}) {
 
     mergedOptions.url = baseUrl + options.url
 
-    console.log(mergedOptions)
-
     Http.get(mergedOptions).then(response => {
       resolve(response.data)
     }).catch(reason => reject(reason))
@@ -30,13 +28,14 @@ function KnockoutApiCall2(type, options = {}) {
 
     mergedOptions.url = baseUrl + options.url
 
-    console.log(mergedOptions)
-
     axios.get(mergedOptions.url).then(response => {
       resolve(response.data)
     }).catch(reason => reject(reason))
   })
 }
+
+
+// Api functions
 
 export function getForum () {
   return KnockoutApiCall('get', {
@@ -47,6 +46,12 @@ export function getForum () {
 export function getSubforum (id, page = 1) {
   return KnockoutApiCall('get', {
     url: `/subforum/${id}/${page}`
+  })
+}
+
+export function getThread (id, page = 1) {
+  return KnockoutApiCall('get', {
+    url: `/v2/threads/${id}/${page}`
   })
 }
 

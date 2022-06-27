@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ subforum ? subforum.name : 'Loading...' }}</ion-title>
+        <ion-title>{{ thread ? thread.title : 'Loading...' }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -15,11 +15,11 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       
-      <template v-if="subforum">
+      <template v-if="thread">
         <div class="p-2">
-        <subforum-list-item
-          v-for="thread in subforum.threads"
-          :thread="thread"
+          <post-list-item
+            v-for="post in thread.posts"
+            :post="post"
           />
         </div>
       </template>
@@ -32,35 +32,33 @@
 
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getSubforum } from '../../utils/api';
+import { getThread } from '../../utils/api';
 import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
-
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import PostListItem from '../../components/thread/post/postListItem.vue';
 
 export default {
   components: {
-    SubforumListItem
+    SubforumListItem,
+    PostListItem
 },
   setup () {
     const router = useRouter();
     const route = useRoute();
-
-    const subforum = ref(null)
+    const thread = ref(null)
 
     onMounted(async () => {
-      subforum.value = await getSubforum(route.params.id)
+      thread.value = await getThread(route.params.id)
     })
 
     const doRefresh = async (event) => {
-      subforum.value = await getSubforum(route.params.id)
+      thread.value = await getThread(route.params.id)
       event.target.complete();
     }
 
     return {
       router,
       route,
-      subforum,
+      thread,
       doRefresh
     }
   }
