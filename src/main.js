@@ -35,7 +35,8 @@ import {
   IonContent,
   IonButton,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent,
+  IonProgressBar
  } from '@ionic/vue';
 
  import Schema from './components/bbcode/schema.vue'
@@ -68,6 +69,7 @@ app.component('IonContent', IonContent)
 app.component('IonButton', IonButton)
 app.component('IonRefresher', IonRefresher)
 app.component('IonRefresherContent', IonRefresherContent)
+app.component('IonProgressBar', IonProgressBar)
 
 app.component('Schema', Schema)
 

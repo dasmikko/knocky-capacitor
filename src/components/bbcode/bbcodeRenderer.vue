@@ -37,7 +37,7 @@ export default {
 
 <style lang="scss">
   .bbcode-content {
-    @apply text-sm;
+    @apply text-sm select-text;
     line-height: 130%;
 
     span {

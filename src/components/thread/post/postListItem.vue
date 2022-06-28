@@ -2,7 +2,7 @@
   <div class="bg-neutral-800 mb-4 rounded">
     <header>
       <div class="user-info">
-        <img class="w-14 mr-4" :src="`https://cdn.knockout.chat/image/${post.user.avatarUrl}`" alt="">
+        <img class="mr-4" :src="`https://cdn.knockout.chat/image/${post.user.avatarUrl}`" alt="">
         <Username class="font-bold" :user="post.user" />
       </div>
       <div class="user-background">
@@ -48,10 +48,14 @@ export default {
 
 <style lang="scss" scoped>
   header {
-    @apply relative items-center justify-start overflow-hidden rounded-t;
+    @apply h-14 relative items-center justify-start overflow-hidden rounded-t;
 
     .user-info {
-      @apply relative z-20 p-2 flex items-center;
+      @apply h-full relative z-20 p-2 flex items-center;
+
+      img {
+        @apply h-10;
+      }
     }
 
     .user-background {

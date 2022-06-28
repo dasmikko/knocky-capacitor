@@ -3,9 +3,10 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/"></ion-back-button>
+          <ion-back-button :default-href="defaultHref"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ thread ? thread.title : 'Loading...' }}</ion-title>
+        <ion-progress-bar v-if="isFetching" type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
 
@@ -31,35 +32,59 @@
 <script>
 
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getThread } from '../../utils/api';
 import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import PostListItem from '../../components/thread/post/postListItem.vue';
+import { computed } from '@vue/reactivity';
 
 export default {
+  name: 'ThreadPage',
   components: {
     SubforumListItem,
     PostListItem
-},
+  },
   setup () {
     const router = useRouter();
     const route = useRoute();
     const thread = ref(null)
+    const page = ref(1)
+    const isFetching = ref(false)
 
     onMounted(async () => {
-      thread.value = await getThread(route.params.id)
+      loadThread()
     })
 
+    const defaultHref = computed(() => {
+      if (thread.value) return `/subforum/${thread.value.subforumId}`
+    })
+
+    const loadThread = async (event) => {
+      isFetching.value = true
+      thread.value = await getThread(route.params.id, page.value)
+      isFetching.value = false
+    }
+
     const doRefresh = async (event) => {
-      thread.value = await getThread(route.params.id)
+      loadThread()
       event.target.complete();
     }
+
+    watch(
+      page,
+      async (newPage, oldPage) => {
+        loadThread()
+      }
+    )
 
     return {
       router,
       route,
       thread,
-      doRefresh
+      doRefresh,
+      defaultHref,
+      page,
+      isFetching
     }
   }
 }

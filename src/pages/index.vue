@@ -26,7 +26,8 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content 
+    <ion-content
+      :fullscreen="true" 
       id="main-content">   
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
