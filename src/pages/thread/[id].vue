@@ -15,8 +15,10 @@
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      
+
       <template v-if="thread">
+        <Pagination v-model:page="page" :post-count="thread.postCount"/>
+
         <div class="p-2">
           <post-list-item
             v-for="post in thread.posts"
@@ -37,10 +39,12 @@ import { getThread } from '../../utils/api';
 import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import PostListItem from '../../components/thread/post/postListItem.vue';
 import { computed } from '@vue/reactivity';
+import Pagination from '../../components/shared/pagination/pagination.vue'
 
 export default {
   name: 'ThreadPage',
   components: {
+    Pagination,
     SubforumListItem,
     PostListItem
   },
