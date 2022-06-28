@@ -23,6 +23,6 @@ export default {
 
 <style lang="scss">
   .link {
-  @apply underline;
-}
+    @apply underline;
+  }
 </style>
