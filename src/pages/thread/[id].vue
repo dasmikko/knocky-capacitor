@@ -17,7 +17,10 @@
       </ion-refresher>
 
       <template v-if="thread">
-        <Pagination v-model:page="page" :post-count="thread.postCount"/>
+        <Pagination
+          class="pt-4 pb-2"
+          v-model:page="page"
+          :total-count="thread.postCount"/>
 
         <div class="p-2">
           <post-list-item
@@ -25,6 +28,11 @@
             :post="post"
           />
         </div>
+
+        <Pagination
+          class="pb-4"
+          v-model:page="page"
+          :total-count="thread.postCount"/>
       </template>
     </ion-content>
   </ion-page>

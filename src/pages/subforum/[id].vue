@@ -6,6 +6,7 @@
           <ion-back-button default-href="/"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ subforum ? subforum.name : 'Loading...' }}</ion-title>
+        <ion-progress-bar v-if="isFetching" type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
 
@@ -16,12 +17,24 @@
       </ion-refresher>
       
       <template v-if="subforum">
+        <Pagination
+          class="pt-4 pb-2"
+          v-model:page="page"
+          :per-page="40"
+          :total-count="subforum.totalThreads"/>
+
         <div class="p-2">
-        <subforum-list-item
-          v-for="thread in subforum.threads"
-          :thread="thread"
+          <subforum-list-item
+            v-for="thread in subforum.threads"
+            :thread="thread"
           />
         </div>
+
+        <Pagination
+          class="pb-4"
+          v-model:page="page"
+          :per-page="40"
+          :total-count="subforum.totalThreads"/>
       </template>
     </ion-content>
   </ion-page>
@@ -31,37 +44,55 @@
 <script>
 
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
-import { getSubforum } from '../../utils/api';
+import { onMounted, ref, watch } from 'vue';
+import {getSubforum, getThread} from '../../utils/api'
 import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
+import Pagination from '../../components/shared/pagination/pagination.vue';
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
 export default {
   components: {
-    SubforumListItem
+    SubforumListItem,
+    Pagination
 },
   setup () {
     const router = useRouter();
     const route = useRoute();
-
+    const page = ref(1)
+    const isFetching = ref(false)
     const subforum = ref(null)
 
+    const loadSubforum = async (event) => {
+      isFetching.value = true
+      subforum.value = await getSubforum(route.params.id, page.value)
+      isFetching.value = false
+    }
+
     onMounted(async () => {
-      subforum.value = await getSubforum(route.params.id)
+      loadSubforum()
     })
 
     const doRefresh = async (event) => {
-      subforum.value = await getSubforum(route.params.id)
+      await loadSubforum()
       event.target.complete();
     }
+
+    watch(
+      page,
+      async (newPage, oldPage) => {
+        loadSubforum()
+      }
+    )
 
     return {
       router,
       route,
       subforum,
-      doRefresh
+      doRefresh,
+      page,
+      isFetching
     }
   }
 }

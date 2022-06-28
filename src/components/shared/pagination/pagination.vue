@@ -1,7 +1,7 @@
 <template>
   <div class="pagination">
     <div class="start">
-      <div class="page-button">
+      <div class="page-button" :class="{ disabled: page === 1}" @click="onPageClick(page - 1)">
         <MenuLeftIcon/>
       </div>
     </div>
@@ -14,7 +14,7 @@
       >{{pageNum}}</div>
     </div>
     <div class="end">
-      <div class="page-button">
+      <div class="page-button" :class="{ disabled: page === totalPages}" @click="onPageClick(page + 1)">
         <MenuRightIcon/>
       </div>
     </div>
@@ -34,12 +34,15 @@ export default {
   },
   props: {
     page: Number,
-    postCount: Number
+    perPage: {
+      type: Number,
+      default: 20
+    },
+    totalCount: Number
   },
   emits: ['update:page'],
   setup(props, {emit}) {
-    const pageSize = 12
-    const totalPages = computed(() => Math.ceil(props.postCount / pageSize))
+    const totalPages = computed(() => Math.ceil(props.totalCount / props.perPage))
 
     const onPageClick = (page) => {
       emit('update:page', page)
@@ -55,7 +58,7 @@ export default {
 
 <style lang="scss" scoped>
   .pagination {
-    @apply flex p-2;
+    @apply flex px-2;
 
     .pages {
       @apply flex-1 flex overflow-auto;
@@ -82,6 +85,10 @@ export default {
 
       &.active {
         @apply bg-neutral-500;
+      }
+
+      &.disabled {
+        @apply opacity-50 pointer-events-none;
       }
     }
   }
