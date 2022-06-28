@@ -1,5 +1,5 @@
 <template>
-  <a :href="node.shortcode.properties.href">
+  <a class="link" :href="node.shortcode.properties.href">
     <template v-if="!node.shortcode.content">{{node.shortcode.properties.href}}</template>
     <template v-else>{{node.shortcode.content}}</template>
   </a>
@@ -22,5 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
-  
+  .link {
+  @apply underline;
+}
 </style>
