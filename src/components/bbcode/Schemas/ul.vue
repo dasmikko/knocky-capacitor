@@ -1,9 +1,10 @@
 <template>
-  <ul class="list-disc list-inside">
+  <ul class="list-disc list-outside pl-4 my-2">
     <Schema
       v-for="(cnode, index) in listItems"
       :index="index"
       :node="cnode"
+      :nodes="listItems"
     />
   </ul>
 </template>

@@ -4,6 +4,7 @@
       v-if="node.children.length"
       v-for="(cnode, index) in node.children"
       :index="index"
+      :nodes="node.children"
       :node="cnode"
     />
     <template v-else>{{node.text}}</template>

@@ -1,5 +1,7 @@
 <template>
-  <img :src="url" alt=""/>
+  <div class="image-container">
+    <img :src="url" alt=""/>
+  </div>
   
 </template>
 
@@ -19,6 +21,12 @@ export default {
 
 </script>
 
-<style lang="scss">
-  
+<style lang="scss" scoped>
+  .image-container {
+    @apply relative overflow-hidden inline-block;
+
+    img {
+      @apply inline-block mb-2;
+    }
+  }
 </style>

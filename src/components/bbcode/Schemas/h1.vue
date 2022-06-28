@@ -1,9 +1,10 @@
 <template>
-  <h1 class="font-bold">
+  <h1 class="text-xl font-bold">
     <Schema
       v-if="node.children.length"
       v-for="(cnode, index) in node.children"
       :index="index"
+      :nodes="node.children"
       :node="cnode"
     />
     <span v-else>{{node.text}}</span>

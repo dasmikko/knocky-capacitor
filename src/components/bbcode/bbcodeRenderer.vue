@@ -2,7 +2,9 @@
   <div class="bbcode-content">
     <Schema
       v-if="nodeTree.children.length"
-      v-for="node in nodeTree.children"
+      v-for="(node, index) in nodeTree.children"
+      :nodes="nodeTree.children"
+      :index="index"
       :node="node"
     />
     <span v-else>{{bbcode}}</span>
@@ -35,6 +37,9 @@ export default {
 
 <style lang="scss">
   .bbcode-content {
+    @apply text-sm;
+    line-height: 130%;
+
     span {
       @apply whitespace-pre-wrap;
       overflow-wrap: break-word;

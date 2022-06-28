@@ -41,6 +41,10 @@
       <QuoteNode :node="node"/>
     </template>
 
+     <template v-else-if="tag === 'blockquote'">
+      <BlockquoteNode :node="node"/>
+    </template>
+
     <template v-else-if="tag === 'video'">
       <VideoNode :url="node.shortcode.content"/>
     </template>
@@ -72,6 +76,7 @@ import ListItemNode from './Schemas/li.vue';
 import UrlNode from './Schemas/url.vue';
 import H1Node from './Schemas/h1.vue';
 import H2Node from './Schemas/h2.vue';
+import BlockquoteNode from './Schemas/blockquote.vue';
 import QuoteNode from './Schemas/quote.vue';
 import VideoNode from './Schemas/video.vue';
 import YouTubeNode from './Schemas/youtube.vue';
@@ -92,33 +97,32 @@ export default {
     QuoteNode,
     VideoNode,
     YouTubeNode,
-    TwitterNode
+    TwitterNode,
+    BlockquoteNode
   },
   props: {
     node: Object,
+    nodes: Array,
     index: Number,
-    checkForNewline: {
-      type: Boolean,
-      default: () => true
-    }
   },
   setup(props) {
     const UNPARSED_TAGS = ['code', 'noparse'];
     const NON_BLOCK_TAGS = ['b', 'i', 'u', 's', 'url', 'spoiler', 'noparse', 'img', 'video'];
 
     const nodeType = computed(() => {
-      if (props.node instanceof TextNode)
+      if (props.node instanceof TextNode || (props.node instanceof ShortcodeNode && props.node.shortcode === null))
         return "TextNode";
       if (props.node instanceof ShortcodeNode)
         return "ShortCodeNode";
     });
 
     const shouldCheckNewLine = (node) => {
-      return node instanceof ShortcodeNode && !NON_BLOCK_TAGS.includes(props.node.shortcode.name);
+      return node instanceof ShortcodeNode && !NON_BLOCK_TAGS.includes(node.shortcode.name);
     }
 
     const checkForNewline = computed(() => {
-      return props.index > 0 && shouldCheckNewLine(props.node.shortCodes.children[index - 1])
+      console.log(props.index, props.nodes[props.index-1])
+      return props.index > 0 && shouldCheckNewLine(props.nodes[props.index-1])
     }); 
 
 
@@ -134,7 +138,7 @@ export default {
     }); 
 
     onMounted(() => {
-      console.log(props.node);
+      //console.log(props.node);
     });
 
     return {

@@ -1,5 +1,5 @@
 <template>
-  <strong>
+  <div class="border-l-2 border-l-blue-600 bg-neutral-700 p-2 mb-4">
     <Schema
       v-if="node.children.length"
       v-for="(cnode, index) in node.children"
@@ -8,7 +8,7 @@
       :node="cnode"
     />
     <span v-else>{{node.text}}</span>
-  </strong>
+  </div>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import { computed } from '@vue/reactivity';
 
 export default {
-  name: 'BoldNode',
+  name: 'BlockquoteNode',
   props: {
     node: Object
   },
