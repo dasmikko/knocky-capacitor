@@ -11,8 +11,8 @@
 
     <ion-content>
       <div class="h-full overflow-hidden">
-        <div class="h-full flex justify-center items-center imgContainer" ref="imgContainer"  @click="onClick">
-          <img ref="imageElRef" :src="route.query.url" alt="" @load="onImageLoad">
+        <div class="h-full flex justify-center items-center imgContainer" ref="imgContainer">
+          <img ref="imageElRef" :src="route.query.url" alt="" @load="onImageLoad" @click="onClick">
         </div>
       </div>
     </ion-content>
@@ -22,10 +22,12 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import {onMounted, ref} from 'vue'
-import { useDrag, rubberbandIfOutOfBounds } from '@vueuse/gesture'
+import { watch, reactive, ref} from 'vue'
+import { useDrag, usePinch } from '@vueuse/gesture'
 import { useMotionProperties, useSpring, useMotion } from '@vueuse/motion'
-import { useDebounceFn } from '@vueuse/core'
+import { useDebounceFn,  } from '@vueuse/core'
+import { interpolate } from 'popmotion'
+
 
 
 // This starter template is using Vue 3 <script setup> SFCs
@@ -45,6 +47,7 @@ const { motionProperties } = useMotionProperties(imgContainer, {
   y: 0,
   scale: 1
 })
+
 const { set } = useSpring(motionProperties, {
   damping: 100,
   stiffness: 2000,
@@ -53,6 +56,7 @@ const { set } = useSpring(motionProperties, {
 
 const drag = useDrag(
   ({ xy: [mx,my], offset: [ox, oy], dragging }) => {
+    // Only allow panning if zoomed
     if (zoomed.value) {
       set({
         cursor: 'grabbing',
@@ -69,11 +73,11 @@ const drag = useDrag(
 )
 
 const onImageLoad = (e) => {
-  const height = imgContainer.value.clientHeight
-  const width = imgContainer.value.clientWidth
+  const height = imageElRef.value.clientHeight
+  const width = imageElRef.value.clientWidth
 
 
-  let topBound = (height/2) - 56
+  let topBound = (height/2)
   let leftBound = width/2
 
   drag.config.drag.bounds = [
@@ -84,7 +88,7 @@ const onImageLoad = (e) => {
 
 const debouncedFn = useDebounceFn(() => {
   clickCount.value = 0
-}, 900)
+}, 1000)
 
 const onClick = (e) => {
   clickCount.value++
@@ -93,6 +97,7 @@ const onClick = (e) => {
     zoomed.value = !zoomed.value
 
     if (!zoomed.value) {
+      drag.state.drag.offset = [0,0]
       set({
         cursor: 'grabbing',
         x: 0,
@@ -100,11 +105,14 @@ const onClick = (e) => {
         scale: 1
       })
     } else {
-      drag.state.drag.offset = [0,0]
+      let newOffsetX = (imgContainer.value.clientWidth/2) - e.layerX
+      let newOffsetY = (imgContainer.value.clientHeight/2) - e.layerY
+      drag.state.drag.offset = [newOffsetX,newOffsetY]
+
       set({
         cursor: 'grabbing',
-        x: 0,
-        y: 0,
+        x: newOffsetX,
+        y: newOffsetY,
         scale: 2
       })
     }
@@ -112,11 +120,64 @@ const onClick = (e) => {
 
   debouncedFn()
 }
+
+
+// Pinch
+const springValues = reactive({
+  zoom: 0,
+  x: 0,
+  y: 0
+})
+const { set: pset, values } = useSpring(springValues)
+const mapper = interpolate([0, 500], [1, 2], { clamp: true })
+
+const pinch = usePinch(
+  ({ offset: [d, a], origin, pinching }) => {
+    console.log(origin)
+    if (d >= 0) pset({
+      zoom: d,
+      x: origin[0],
+      y: origin[1],
+    })
+  },
+  {
+    domTarget: imgContainer,
+    eventOptions: {
+      passive: true,
+    },
+  },
+)
+
+watch(
+  springValues,
+  (newVal) => {
+    Object.assign(motionProperties, {
+      x: newVal.x,
+      y: newVal.y,
+      scale: mapper(newVal.zoom),
+    })
+
+    if (pinch.state.pinch.offset[0] <= 0) {
+      console.log('reset pinch')
+      pinch.state.pinch.offset = [0, 0]
+      zoomed.value = false
+    } else {
+      zoomed.value = true
+    }
+    console.log(mapper(newVal.zoom), pinch.state.pinch.offset)
+  },
+  {
+    deep: true,
+  },
+)
+
 </script>
 
 
 <style lang="scss">
   .imgContainer {
-    transform: scale(1);
+    img {
+      max-height: calc(100vh - 56px);
+    }
   }
 </style>
