@@ -3,6 +3,8 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import routes from "virtual:generated-pages";
 import App from './App.vue';
+import { GesturePlugin } from '@vueuse/gesture'
+import { MotionPlugin } from '@vueuse/motion'
 
 import './assets/tailwind.css'
 
@@ -54,6 +56,8 @@ const app = createApp(App)
 
 app.use(IonicVue)
 app.use(router);
+app.use(GesturePlugin)
+app.use(MotionPlugin)
 
 app.component('IonMenu', IonMenu)
 app.component('IonMenuButton', IonMenuButton)
