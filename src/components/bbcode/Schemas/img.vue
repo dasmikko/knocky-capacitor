@@ -1,14 +1,12 @@
 <template>
   <div class="image-container">
-    <img :src="url" alt=""/>
+    <img :src="url" alt="" @click="onImageClick"/>
   </div>
   
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
-import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
-import { computed } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'ImageNode',
@@ -16,6 +14,16 @@ export default {
     url: String,
   },
   setup(props) {
+    const router = useRouter()
+
+    const onImageClick = () => {
+      router.push(`/img?url=`+props.url)
+    }
+
+    return {
+      router,
+      onImageClick
+    }
   }
 }
 

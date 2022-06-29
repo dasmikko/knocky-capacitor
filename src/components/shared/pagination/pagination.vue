@@ -81,7 +81,7 @@ export default {
     }
 
     .page-button {
-      @apply bg-neutral-700 px-2 h-7 w-7 text-sm flex justify-center items-center;
+      @apply bg-neutral-700 px-3 h-7 w-7 text-sm flex justify-center items-center rounded;
 
       &.active {
         @apply bg-neutral-500;

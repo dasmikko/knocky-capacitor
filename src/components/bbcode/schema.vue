@@ -121,7 +121,6 @@ export default {
     }
 
     const checkForNewline = computed(() => {
-      console.log(props.index, props.nodes[props.index-1])
       return props.index > 0 && shouldCheckNewLine(props.nodes[props.index-1])
     }); 
 
