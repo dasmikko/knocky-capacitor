@@ -56,18 +56,19 @@ const { set } = useSpring(motionProperties, {
 const mapper = interpolate([0, 500], [1, 2], { clamp: true })
 
 const onGestureChange = (state) => {
-  if (state.last) return
 
+  if (state.last) return
 
   let obj = {
     cursor: 'grabbing'
   }
 
-  if (state.da) {
-    if (mapper(state.da[0]) > 1) {
+  if (state.pinching) {
+    if (state.offset[0] > 1) {
       zoomed.value = true
-      obj.scale = mapper(state.da[0])
+      obj.scale = mapper(state.offset[0])
     } else {
+      console.log('not zoomed')
       zoomed.value = false
       obj.scale = 1
       gesture.state.pinch.values = [0, 0]
