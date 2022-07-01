@@ -47,34 +47,25 @@ const imgStyle = reactive({
   scale: 2
 })
 
-const maybeAdjustImage = () => {
-  let newCrop = imgStyle;
-  let imageBounds = imgRef.value.getBoundingClientRect();
-  let containerBounds = imgContainerRef.value.getBoundingClientRect();
-  console.log(containerBounds)
-  let originalWidth = imgRef.value.clientWidth;
-  let widthOverhang = (imageBounds.width - originalWidth) / 2;
-  let originalHeight = imgRef.value.height;
-  let heightOverhang = (imageBounds.height - originalHeight) / 2;
-
-  if (imageBounds.left > containerBounds.left) {
-    newCrop.x = widthOverhang / imgStyle.scale;
-  } else if (imageBounds.right < containerBounds.right) {
-    newCrop.x = -(imageBounds.width - containerBounds.width) + widthOverhang;
-  }
-
-  imgStyle.x = newCrop.x
-  imgStyle.y = newCrop.y
-}
-
 useGesture(
   {
     onDrag: (state) => {
       let imageBounds = imgRef.value.getBoundingClientRect();
       let containerBounds = imgContainerRef.value.getBoundingClientRect();
 
-      console.log(Math.ceil(imageBounds.top), containerBounds.top)
-      console.log(state.movement[1], state.direction[0])
+      const imageBoundsTop = Math.ceil(imageBounds.top)
+      const imageBoundsBottom = Math.ceil(imageBounds.bottom)
+      const imageBoundsLeft = Math.ceil(imageBounds.left)
+      const imageBoundsRight = Math.ceil(imageBounds.right)
+
+      let newXLeft = imageBoundsLeft + state.movement[0]
+      let newXRight = imageBoundsRight - state.movement[0]
+
+      
+      console.log(imageBoundsLeft)
+      console.log(newXLeft)
+      console.log(state.movement[0])
+
 
       if (Math.ceil(imageBounds.top) > containerBounds.top && state.direction[1] < 0) {
         imgStyle.y = state.movement[1]
@@ -84,12 +75,14 @@ useGesture(
         imgStyle.y = state.movement[1]
       }
 
-      if (Math.ceil(imageBounds.left) < containerBounds.left && state.direction[0] > 0) {
+
+      if (imageBoundsLeft < containerBounds.left || newXLeft < containerBounds.left) {
         imgStyle.x = state.movement[0]
+        
+      } else {
+        state.offset = [0,0]  
       }
-      if (Math.ceil(imageBounds.right) > containerBounds.right && state.direction[0] < 0) {
-        imgStyle.x = state.movement[0]
-      }
+
 
 
 
@@ -100,7 +93,10 @@ useGesture(
   },
   {
     drag: {
-      initial: () => [imgStyle.x, imgStyle.y]
+      initial: () =>{
+        console.log('initial')
+        return [imgStyle.x, imgStyle.y]
+      } 
     },
     pinch: {
       distanceBounds: { min: 0 },
