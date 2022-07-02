@@ -15,6 +15,7 @@
     </div>
     <div class="post-content">
       <BbcodeRenderer
+        :postId="post.id"
         :bbcode="post.content"
       />
     </div>

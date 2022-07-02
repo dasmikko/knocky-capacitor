@@ -5,6 +5,7 @@ import routes from "virtual:generated-pages";
 import App from './App.vue';
 import { GesturePlugin } from '@vueuse/gesture'
 import { MotionPlugin } from '@vueuse/motion'
+import 'photoswipe/style.css';
 
 import './assets/tailwind.css'
 
@@ -38,7 +39,9 @@ import {
   IonButton,
   IonRefresher,
   IonRefresherContent,
-  IonProgressBar
+  IonProgressBar,
+  IonSlides,
+  IonSlide
  } from '@ionic/vue';
 
  import Schema from './components/bbcode/schema.vue'
@@ -72,6 +75,8 @@ app.component('IonButton', IonButton)
 app.component('IonRefresher', IonRefresher)
 app.component('IonRefresherContent', IonRefresherContent)
 app.component('IonProgressBar', IonProgressBar)
+app.component('IonSlides', IonSlides)
+app.component('IonSlide', IonSlide)
 
 app.component('Schema', Schema)
 

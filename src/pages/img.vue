@@ -10,9 +10,19 @@
     </ion-header>
 
     <ion-content>
-      <div class="main-container h-full" ref="imgContainerRef">
-          <QuickPinchZoom :url="route.query.url"/>
-      </div>
+      <ion-slides pager="true" :options="slideOpts">
+        <ion-slide>
+          <div class="main-container h-full">
+              <QuickPinchZoom :url="route.query.url"/>
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
     </ion-content>
   </ion-page>
 </template>

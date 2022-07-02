@@ -1,12 +1,21 @@
 <template>
-  <div class="image-container">
-    <img :src="url" alt="" @click="onImageClick"/>
-  </div>
-  
+  <a 
+    class="image"
+    :href="url" 
+    :data-pswp-width="imageSize.width"
+    :data-pswp-height="imageSize.height" >
+    <img
+      :src="url" 
+      ref="img"
+      @load="onImageLoad"
+      alt=""/>
+  </a>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
+import { onMounted, reactive, ref } from 'vue';
+
 
 export default {
   name: 'ImageNode',
@@ -15,14 +24,22 @@ export default {
   },
   setup(props) {
     const router = useRouter()
+    const img = ref()
+    const imageSize = reactive({
+      width: 0,
+      height: 0
+    })
 
-    const onImageClick = () => {
-      router.push(`/img?url=`+props.url)
+    const onImageLoad = (ev) => {
+      imageSize.width = img.value.naturalWidth
+      imageSize.height = img.value.naturalHeight
     }
 
     return {
       router,
-      onImageClick
+      img,
+      imageSize,
+      onImageLoad
     }
   }
 }
@@ -30,11 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .image-container {
-    @apply relative overflow-hidden inline-block;
-
-    img {
-      @apply inline-block mb-2;
-    }
+  img {
+    @apply inline-block mb-2;
   }
 </style>
