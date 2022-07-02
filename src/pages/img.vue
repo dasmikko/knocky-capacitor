@@ -10,112 +10,47 @@
     </ion-header>
 
     <ion-content>
-      <div class="h-full flex justify-center items-center overflow-hidden" ref="imgContainerRef">
-          <img
-            class="relative"
-            ref="imgRef"
-            :src="route.query.url" alt=""
-            :style="{
-              left: `${imgStyle.x}px`,
-              top: `${imgStyle.y}px`,
-              transform: `scale(${imgStyle.scale})`,
-            }"
-          >
-        </div>
+      <div class="main-container h-full" ref="imgContainerRef">
+          <QuickPinchZoom :url="route.query.url"/>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 
-<script setup>
+<script>
 import { useRoute, useRouter } from 'vue-router';
-import { watch, reactive, ref} from 'vue'
-import { useGesture } from '@vueuse/gesture'
+import { watch, reactive, ref, onMounted} from 'vue'
+import {applyReactInVue} from 'veaury'
+import RQuickPinchZoom from "../react_app/QuickPinchZoom";
 
-
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-
-const router = useRouter();
-const route = useRoute();
-const imgRef = ref(null)
-const imgContainerRef = ref(null)
-
-const imgStyle = reactive({
-  x: 0,
-  y: 0,
-  scale: 2
-})
-
-useGesture(
-  {
-    onDrag: (state) => {
-      let imageBounds = imgRef.value.getBoundingClientRect();
-      let containerBounds = imgContainerRef.value.getBoundingClientRect();
-
-      const imageBoundsTop = Math.ceil(imageBounds.top)
-      const imageBoundsBottom = Math.ceil(imageBounds.bottom)
-      const imageBoundsLeft = Math.ceil(imageBounds.left)
-      const imageBoundsRight = Math.ceil(imageBounds.right)
-
-      let newXLeft = imageBoundsLeft + state.movement[0]
-      let newXRight = imageBoundsRight - state.movement[0]
-
-      
-      console.log(imageBoundsLeft)
-      console.log(newXLeft)
-      console.log(state.movement[0])
-
-
-      if (Math.ceil(imageBounds.top) > containerBounds.top && state.direction[1] < 0) {
-        imgStyle.y = state.movement[1]
-      }
-
-      if (Math.ceil(imageBounds.bottom) < containerBounds.bottom && state.direction[1] > 0) {
-        imgStyle.y = state.movement[1]
-      }
-
-
-      if (imageBoundsLeft < containerBounds.left || newXLeft < containerBounds.left) {
-        imgStyle.x = state.movement[0]
-        
-      } else {
-        state.offset = [0,0]  
-      }
-
-
-
-
-    },
-    onPinch: (state) => {
-      imgStyle.scale = 1 + state.offset[0] / 70
-    },
+export default {
+  name: 'ImageViewer',
+  components: {
+    QuickPinchZoom: applyReactInVue(RQuickPinchZoom)
   },
-  {
-    drag: {
-      initial: () =>{
-        console.log('initial')
-        return [imgStyle.x, imgStyle.y]
-      } 
-    },
-    pinch: {
-      distanceBounds: { min: 0 },
-    },
-    domTarget: imgRef,
-    eventOptions: {
-      passive: false
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const imgRef = ref(null)
+    const imgContainerRef = ref(null)
+
+    return {
+      imgRef,
+      router,
+      route,
+      imgContainerRef
     }
+
   }
-)
-
-
+}
 </script>
 
 
 <style lang="scss">
-  .imgContainer {
-    img {
-      max-height: calc(100vh - 56px);
+  .main-container {
+    .full-height {
+      
     }
   }
 </style>
