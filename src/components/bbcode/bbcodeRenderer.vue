@@ -12,10 +12,11 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import {onMounted, onUnmounted, ref} from 'vue'
 import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import { computed } from 'vue';
+import {useBackButton} from '@ionic/vue'
 
 export default {
   name: "BBCodeRenderer",
@@ -25,10 +26,13 @@ export default {
   },
   setup(props) {
     const lightbox = ref(null)
+    const lightBoxOpen = ref(false)
 
     const nodeTree = computed(() => {
         return ShortcodeTree.parse(props.bbcode);
     });
+
+
 
     onMounted(() => {
       console.log(lightbox.value)
@@ -40,7 +44,23 @@ export default {
 
           pswpModule: () => import('photoswipe'),
         });
+
+        lightbox.value.on('beforeOpen', () => {
+          lightBoxOpen.value = true
+          // photoswipe starts to open
+        })
+
+        lightbox.value.on('close', () => {
+          lightBoxOpen.value = false
+          // photoswipe starts to open
+        })
         lightbox.value.init();
+      }
+    })
+
+    onUnmounted(() => {
+      if (lightbox.value !== null) {
+        lightbox.value.destroy();
       }
     })
 

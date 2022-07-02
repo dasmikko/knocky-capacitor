@@ -48,6 +48,7 @@ import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import PostListItem from '../../components/thread/post/postListItem.vue';
 import { computed } from '@vue/reactivity';
 import Pagination from '../../components/shared/pagination/pagination.vue'
+import {useBackButton} from '@ionic/vue'
 
 export default {
   name: 'ThreadPage',
@@ -66,6 +67,21 @@ export default {
     onMounted(async () => {
       loadThread()
     })
+
+    /*useBackButton(10, (processNextHandler) => {
+      console.log('Handler was called!');
+
+      console.log(lightbox.value)
+
+      if (!lightBoxOpen.value) {
+        processNextHandler();
+      } else {
+        lightbox.value.pswp.close()
+      }
+
+    });*
+
+     */
 
     const defaultHref = computed(() => {
       if (thread.value) return `/subforum/${thread.value.subforumId}`
