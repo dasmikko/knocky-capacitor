@@ -10,7 +10,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content 
+    <ion-content
       id="main-content">
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
@@ -24,6 +24,7 @@
 
         <div class="p-2">
           <post-list-item
+            :containerRef="contentContainerRef"
             v-for="post in thread.posts"
             :post="post"
           />
@@ -49,6 +50,7 @@ import PostListItem from '../../components/thread/post/postListItem.vue';
 import { computed } from '@vue/reactivity';
 import Pagination from '../../components/shared/pagination/pagination.vue'
 import {useBackButton} from '@ionic/vue'
+import { useElementVisibility, useIntersectionObserver } from '@vueuse/core';
 
 export default {
   name: 'ThreadPage',
@@ -63,6 +65,8 @@ export default {
     const thread = ref(null)
     const page = ref(1)
     const isFetching = ref(false)
+    
+   
 
     onMounted(async () => {
       loadThread()

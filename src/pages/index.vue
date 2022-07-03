@@ -12,7 +12,7 @@
       <ion-content>
         <a href="https://knockout.chat/login">test login</a>
         <ion-button @click="router.push('/login')">Login</ion-button>
-        <ion-button @click="router.push('/subpage')">Page</ion-button>
+        <ion-button @click="router.push('/img')">Page</ion-button>
         <ion-button @click="onClick">Go to another page</ion-button>
       </ion-content>
     </ion-menu>

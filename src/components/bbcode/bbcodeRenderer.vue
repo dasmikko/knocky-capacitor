@@ -1,5 +1,5 @@
 <template>
-  <div class="bbcode-content" :id="'post-' + postId">
+  <div ref="target" class="bbcode-content" :id="'post-' + postId">
     <Schema
       v-if="nodeTree.children.length"
       v-for="(node, index) in nodeTree.children"
@@ -11,37 +11,56 @@
   </div>
 </template>
 
-<script>
-import {onMounted, onUnmounted, ref} from 'vue'
+<script setup>
+import {onMounted, onUnmounted, ref, watch, defineProps} from 'vue'
 import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import { computed } from 'vue';
-import {useBackButton} from '@ionic/vue'
+import { useIntersectionObserver } from '@vueuse/core';
 
-export default {
-  name: "BBCodeRenderer",
-  props: {
-    postId: Number,
-    bbcode: String,
+
+
+const props = defineProps({
+  postId: Number,
+  bbcode: String,
+})
+
+const lightbox = ref(null)
+const lightBoxOpen = ref(false)
+
+const nodeTree = computed(() => {
+    return ShortcodeTree.parse(props.bbcode);
+});
+
+const target = ref(null)
+const targetIsVisible = ref(false)
+
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    targetIsVisible.value = isIntersecting
   },
-  setup(props) {
-    const lightbox = ref(null)
-    const lightBoxOpen = ref(false)
+) 
 
-    const nodeTree = computed(() => {
-        return ShortcodeTree.parse(props.bbcode);
-    });
+onUnmounted(() => {
+  if (lightbox.value !== null) {
+    lightbox.value.destroy();
+    lightbox.value = null
+  }
+})
 
-
-
-    onMounted(() => {
-      console.log(lightbox.value)
+watch(
+  targetIsVisible,
+  (newIsVisible) => {
+    console.log('post is visible:', newIsVisible)
+    if (newIsVisible) {
       if (lightbox.value === null) {
         console.log('init lightbox', '#post-' + props.postId)
         lightbox.value = new PhotoSwipeLightbox({
           gallery: '#post-' + props.postId,
           children: 'a.image',
-
+          secondaryZoomLevel: 0.5,
+          maxZoomLevel: 2,
           pswpModule: () => import('photoswipe'),
         });
 
@@ -56,20 +75,14 @@ export default {
         })
         lightbox.value.init();
       }
-    })
-
-    onUnmounted(() => {
+    } else {
       if (lightbox.value !== null) {
         lightbox.value.destroy();
+        lightbox.value = null
       }
-    })
-
-    return {
-        nodeTree
-    };
-  },
-  
-}
+    }
+  }
+)
 
 </script>
 

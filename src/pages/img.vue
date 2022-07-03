@@ -10,57 +10,43 @@
     </ion-header>
 
     <ion-content>
-      <ion-slides pager="true" :options="slideOpts">
-        <ion-slide>
-          <div class="main-container h-full">
-              <QuickPinchZoom :url="route.query.url"/>
-          </div>
-        </ion-slide>
-        <ion-slide>
-          <h1>Slide 2</h1>
-        </ion-slide>
-        <ion-slide>
-          <h1>Slide 3</h1>
-        </ion-slide>
-      </ion-slides>
+      <div class="relative" id="imgcontainer">
+        <a href="https://cdn.knockout.chat/image/884-c6f6419e-8f3d-484c-bb05-456219e93865.png"
+        :data-pswp-width="938"
+        :data-pswp-height="616">
+        <img 
+          
+          src="https://cdn.knockout.chat/image/884-c6f6419e-8f3d-484c-bb05-456219e93865.png" 
+          alt="">
+          </a>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 
-<script>
+<script setup>
 import { useRoute, useRouter } from 'vue-router';
 import { watch, reactive, ref, onMounted} from 'vue'
-import {applyReactInVue} from 'veaury'
-import RQuickPinchZoom from "../react_app/QuickPinchZoom";
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
-export default {
-  name: 'ImageViewer',
-  components: {
-    QuickPinchZoom: applyReactInVue(RQuickPinchZoom)
-  },
-  setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const imgRef = ref(null)
-    const imgContainerRef = ref(null)
 
-    return {
-      imgRef,
-      router,
-      route,
-      imgContainerRef
-    }
+const router = useRouter();
+const route = useRoute();
+const lightbox = ref(null)
 
+onMounted(() => {
+  if (lightbox.value === null) {
+    console.log('init lightbox')
+    lightbox.value = new PhotoSwipeLightbox({
+      gallery: '#imgcontainer a',
+      pswpModule: () => import('photoswipe'),
+    });
+    lightbox.value.init();
   }
-}
+})
 </script>
 
 
 <style lang="scss">
-  .main-container {
-    .full-height {
-      
-    }
-  }
 </style>

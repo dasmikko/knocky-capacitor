@@ -15,6 +15,7 @@
     </div>
     <div class="post-content">
       <BbcodeRenderer
+        :postIsVisible="true"
         :postId="post.id"
         :bbcode="post.content"
       />
@@ -29,7 +30,8 @@ import Username from '../../shared/username.vue';
 export default {
     name: "PostListItem",
     props: {
-        post: Object,
+      containerRef: Object,
+      post: Object,
     },
     components: { BbcodeRenderer, Username },
     setup(props) {
