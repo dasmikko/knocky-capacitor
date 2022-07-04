@@ -23,6 +23,7 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>Knocky</ion-title>
+        <ion-progress-bar v-if="isFetching" type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
 
@@ -63,30 +64,34 @@ export default {
 },
   setup () {
     const router = useRouter();
-    
     const items = ref([])
+    const isFetching = ref(false)
 
     const onClick = () => {
       router.push('/test')
     }
 
     const doRefresh = async (event) => {
+      isFetching.value = true
       const fetchedItems = await getForum()
       items.value = fetchedItems.list
+      isFetching.value = false
       event.target.complete();
     }
 
     onMounted(async () => {
+      isFetching.value = true
       const fetchedItems = await getForum()
       items.value = fetchedItems.list
-      console.log(items.value)
+      isFetching.value = false
     })
 
     return {
       router,
       onClick,
       items,
-      doRefresh
+      doRefresh,
+      isFetching
     }
   }
 }

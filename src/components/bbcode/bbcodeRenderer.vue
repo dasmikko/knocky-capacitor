@@ -52,15 +52,11 @@ onUnmounted(() => {
 watch(
   targetIsVisible,
   (newIsVisible) => {
-    console.log('post is visible:', newIsVisible)
     if (newIsVisible) {
       if (lightbox.value === null) {
-        console.log('init lightbox', '#post-' + props.postId)
         lightbox.value = new PhotoSwipeLightbox({
           gallery: '#post-' + props.postId,
           children: 'a.image',
-          secondaryZoomLevel: 0.5,
-          maxZoomLevel: 2,
           pswpModule: () => import('photoswipe'),
         });
 

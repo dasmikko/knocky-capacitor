@@ -24,7 +24,6 @@
 
         <div class="p-2">
           <post-list-item
-            :containerRef="contentContainerRef"
             v-for="post in thread.posts"
             :post="post"
           />
