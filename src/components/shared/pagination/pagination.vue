@@ -1,18 +1,19 @@
 <template>
-  <div class="pagination">
+  <div class="pagination" v-show="totalPages > 1">
     <div class="start">
       <div class="page-button" :class="{ disabled: page === 1}" @click="onPageClick(page - 1)">
         <MenuLeftIcon/>
       </div>
     </div>
-    <div class="pages">
-
-      <div class="page-button"
-           v-for="pageNum in totalPages"
-           :class="{ 'active': page === pageNum }"
-           @click="onPageClick(pageNum)"
-      >{{pageNum}}</div>
-    </div>
+    <ion-content style="height: 28px" :scrollX="true" :scrollY="false" :force-overscroll="true">
+      <div class="pages">
+        <div class="page-button"
+            v-for="pageNum in totalPages"
+            :class="{ 'active': page === pageNum }"
+            @click="onPageClick(pageNum)"
+        >{{pageNum}}</div>
+      </div>
+    </ion-content>
     <div class="end">
       <div class="page-button" :class="{ disabled: page === totalPages}" @click="onPageClick(page + 1)">
         <MenuRightIcon/>
@@ -61,7 +62,7 @@ export default {
     @apply flex px-2;
 
     .pages {
-      @apply flex-1 flex overflow-auto;
+      @apply flex-1 flex flex-row overflow-auto h-12;
 
       &::-webkit-scrollbar {
         display: none;
@@ -69,6 +70,10 @@ export default {
 
       .page-button {
         @apply mr-2;
+
+        &:last-child {
+          @apply mr-0;
+        }
       }
     }
 

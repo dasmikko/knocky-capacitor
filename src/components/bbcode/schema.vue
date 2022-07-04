@@ -17,6 +17,10 @@
       <ItalicNode :node="node"/>
     </template>
 
+    <template v-else-if="tag === 'u'">
+      <UnderlinedNode :node="node"/>
+    </template>
+
     <template v-else-if="tag === 'h1'">
       <H1Node :node="node"/>
     </template>
@@ -71,6 +75,7 @@ import { computed } from '@vue/reactivity';
 import ImageNode from './Schemas/img.vue';
 import BoldNode from './Schemas/b.vue';
 import ItalicNode from './Schemas/i.vue';
+import UnderlinedNode from './Schemas/u.vue';
 import UnorderedListNode from './Schemas/ul.vue';
 import ListItemNode from './Schemas/li.vue';
 import UrlNode from './Schemas/url.vue';
@@ -98,7 +103,8 @@ export default {
     VideoNode,
     YouTubeNode,
     TwitterNode,
-    BlockquoteNode
+    BlockquoteNode,
+    UnderlinedNode
   },
   props: {
     node: Object,

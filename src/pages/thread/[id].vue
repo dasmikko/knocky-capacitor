@@ -11,7 +11,8 @@
     </ion-header>
 
     <ion-content
-      id="main-content">
+      ref="contentRef"
+      id="thread-content">
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -64,7 +65,11 @@ export default {
     const thread = ref(null)
     const page = ref(1)
     const isFetching = ref(false)
+    const contentRef = ref()
     
+    const getContent = () => {
+      return document.querySelector('#thread-content')
+    }
    
 
     onMounted(async () => {
@@ -105,6 +110,7 @@ export default {
       page,
       async (newPage, oldPage) => {
         loadThread()
+        getContent().scrollToTop(500)
       }
     )
 
@@ -112,6 +118,7 @@ export default {
       router,
       route,
       thread,
+      contentRef,
       doRefresh,
       defaultHref,
       page,

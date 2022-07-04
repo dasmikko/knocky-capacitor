@@ -11,7 +11,8 @@
     </ion-header>
 
     <ion-content 
-      id="main-content">
+      ref="contentRef"
+      id="subforum-content">
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -63,11 +64,16 @@ export default {
     const page = ref(1)
     const isFetching = ref(false)
     const subforum = ref(null)
+    const contentRef = ref(null)
 
     const loadSubforum = async (event) => {
       isFetching.value = true
       subforum.value = await getSubforum(route.params.id, page.value)
       isFetching.value = false
+    }
+
+    const getContent = () => {
+      return document.querySelector('#subforum-content')
     }
 
     onMounted(async () => {
@@ -83,6 +89,7 @@ export default {
       page,
       async (newPage, oldPage) => {
         loadSubforum()
+        getContent().scrollToTop(500)
       }
     )
 
@@ -90,6 +97,7 @@ export default {
       router,
       route,
       subforum,
+      contentRef,
       doRefresh,
       page,
       isFetching
