@@ -49,6 +49,7 @@ import { onMounted, ref, watch } from 'vue';
 import {getSubforum, getThread} from '../../utils/api'
 import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import Pagination from '../../components/shared/pagination/pagination.vue';
+import { toastController } from '@ionic/vue';
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
@@ -67,9 +68,21 @@ export default {
     const contentRef = ref(null)
 
     const loadSubforum = async (event) => {
-      isFetching.value = true
-      subforum.value = await getSubforum(route.params.id, page.value)
-      isFetching.value = false
+      try {
+        isFetching.value = true
+        subforum.value = await getSubforum(route.params.id, page.value)
+        isFetching.value = false
+      } catch (e) {
+        const toast = await toastController
+        .create({
+          message: 'Failed to get threads.',
+          color: 'danger',
+          duration: 2000
+        })
+
+        isFetching.value = false
+        return toast.present()
+      }
     }
 
     const getContent = () => {

@@ -62,7 +62,7 @@ import { getForum } from '../utils/api'
 import ForumListItem from '../components/forum/ForumListItem.vue';
 import {useStore} from '../stores/auth.js'
 import Username from '../components/shared/username.vue'
-
+import { toastController } from '@ionic/vue'; 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
@@ -82,19 +82,32 @@ export default {
       router.push('/test')
     }
 
-    const doRefresh = async (event) => {
-      isFetching.value = true
-      const fetchedItems = await getForum()
-      items.value = fetchedItems.list
-      isFetching.value = false
+    const loadSubforums = async () => {
+      try {
+        isFetching.value = true
+        const fetchedItems = await getForum()
+        items.value = fetchedItems.list
+        isFetching.value = false
+      } catch (e) {
+        const toast = await toastController
+        .create({
+          message: 'Failed to get subforums.',
+          color: 'danger',
+          duration: 2000
+        })
+
+        isFetching.value = false
+        return toast.present()
+      }
+    }
+
+   const doRefresh = async (event) => {
+      await loadSubforums()
       event.target.complete();
     }
 
     onMounted(async () => {
-      isFetching.value = true
-      const fetchedItems = await getForum()
-      items.value = fetchedItems.list
-      isFetching.value = false
+      loadSubforums()
     })
 
     return {

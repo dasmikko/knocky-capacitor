@@ -49,7 +49,7 @@ import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import PostListItem from '../../components/thread/post/postListItem.vue';
 import { computed } from '@vue/reactivity';
 import Pagination from '../../components/shared/pagination/pagination.vue'
-import {useBackButton} from '@ionic/vue'
+import {toastController, useBackButton} from '@ionic/vue'
 import { useElementVisibility, useIntersectionObserver } from '@vueuse/core';
 
 export default {
@@ -96,13 +96,24 @@ export default {
     })
 
     const loadThread = async (event) => {
-      isFetching.value = true
-      thread.value = await getThread(route.params.id, page.value)
-      isFetching.value = false
+      try {
+        isFetching.value = true
+        thread.value = await getThread(route.params.id, page.value)
+        isFetching.value = false
+      } catch (e) {
+        const toast = await toastController
+        .create({
+          message: 'Failed to get thread.',
+          color: 'danger',
+          duration: 2000
+        })
+        isFetching.value = false
+        return toast.present()
+      }
     }
 
     const doRefresh = async (event) => {
-      loadThread()
+      await loadThread()
       event.target.complete();
     }
 

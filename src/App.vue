@@ -1,13 +1,17 @@
 
 <script>
-import { IonButton, IonApp, IonRouterOutlet } from '@ionic/vue';
+import { IonButton, IonApp, IonRouterOutlet, toastController } from '@ionic/vue';
 import { useBackButton, useIonRouter } from '@ionic/vue';
 import { App } from '@capacitor/app';
 import HelloWorld from './components/HelloWorld.vue'
 import { useRoute, useRouter } from 'vue-router';
-import {onMounted} from 'vue'
+import {onMounted, watch, reactive} from 'vue'
 import {getSyncData, getUser} from './utils/api.js'
 import {useStore} from './stores/auth.js'
+import { useNetwork } from '@vueuse/core'
+import WifiIcon from 'vue-material-design-icons/Wifi.vue'
+import WifiAlertIcon from 'vue-material-design-icons/WifiAlert.vue'
+import { wifi } from 'ionicons/icons';
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
@@ -17,12 +21,15 @@ export default {
     HelloWorld,
     IonButton,
     IonApp,
-    IonRouterOutlet
+    IonRouterOutlet,
+    WifiIcon,
+    WifiAlertIcon
   },
   setup () {
     const router = useRouter()
     const ionRouter = useIonRouter();
     const authStore = useStore()
+    const network = reactive(useNetwork())
 
     App.addListener('appUrlOpen', function (event) {
       // url: 'https://api.knockout.chat/auth/finish?user=%257B%2522id%2522%253A73%252C%2522username%2522%253A%2522tisseman890%2522%252C%2522avatar_url%2522%253A%252273.webp%2522%252C%2522background_url%2522%253A%252273-bg.webp%2522%252C%2522usergroup%2522%253A1%252C%2522role%2522%253A%257B%2522id%2522%253A4%252C%2522code%2522%253A%2522basic-user%2522%252C%2522description%2522%253A%2522A%2520basic%2520user%2520with%2520normal%2520forum%2520access%2522%252C%2522permissionCodes%2522%253A%255B%255D%252C%2522createdAt%2522%253A%25222021-10-25T23%253A41%253A10.000Z%2522%252C%2522updatedAt%2522%253A%25222021-10-25T23%253A41%253A10.000Z%2522%257D%257D'
@@ -63,6 +70,32 @@ export default {
     onMounted(async () => {
       checkAuthState()
     })
+
+    watch(
+      network,
+      async (newNetworkState, oldNetworkState) => {
+        console.log(newNetworkState.isOnline)
+        if (!newNetworkState.isOnline) {
+          const toast = await toastController
+          .create({
+            message: 'You are currently offline.',
+            icon: wifi,
+            color: 'danger',
+            duration: 2000
+          })
+          toast.present()
+        } else {
+          const toast = await toastController
+          .create({
+            message: 'You are online again.',
+            icon: wifi,
+            color: 'success',
+            duration: 2000
+          })
+          toast.present()
+        }
+      }
+    )
 
 
     return {}
