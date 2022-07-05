@@ -1,7 +1,9 @@
-# Vue 3 + Vite
+# Knocky Capacitor
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Welcome to the PWA version of the Knocky app!
 
-## Recommended IDE Setup
+The goal of this, is to replicate the Knocky app, in pure PWA.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+# Cool, but why?
+I'm a web developer, with many years of experience with Vue.js, and decided to give myself a challenge, and a project to experiment, and push the limits with what you can do with a PWA.
