@@ -5,6 +5,7 @@ import routes from "virtual:generated-pages";
 import App from './App.vue';
 import { GesturePlugin } from '@vueuse/gesture'
 import { MotionPlugin } from '@vueuse/motion'
+import { createPinia } from 'pinia'
 import 'photoswipe/style.css';
 
 import './assets/tailwind.css'
@@ -55,12 +56,15 @@ const router = createRouter({
   routes,
 });
 
+const pinia = createPinia()
+
 const app = createApp(App)
 
 app.use(IonicVue)
 app.use(router);
 app.use(GesturePlugin)
 app.use(MotionPlugin)
+app.use(pinia)
 
 app.component('IonMenu', IonMenu)
 app.component('IonMenuButton', IonMenuButton)

@@ -6,14 +6,21 @@
       content-id="main-content">
       <ion-header>
         <ion-toolbar translucent>
-          <ion-title>BOO!</ion-title>
+          <ion-title>
+            <template v-if="authStore.isAuthenticated">
+              {{authStore.userInfo.username}}
+            </template>
+
+            <template v-if="!authStore.isAuthenticated">
+              Not Logged in
+            </template>
+          </ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <a href="https://knockout.chat/login">test login</a>
-        <ion-button @click="router.push('/login')">Login</ion-button>
-        <ion-button @click="router.push('/img')">Page</ion-button>
-        <ion-button @click="onClick">Go to another page</ion-button>
+        <template v-if="authStore.isAuthenticated">
+          <img :src="'https://cdn.knockout.chat/image/' + authStore.userInfo.avatar_url" alt="">
+        </template>
       </ion-content>
     </ion-menu>
 
@@ -53,12 +60,15 @@ import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getForum } from '../utils/api'
 import ForumListItem from '../components/forum/ForumListItem.vue';
+import {useStore} from '../stores/auth.js'
+import Username from '../components/shared/username.vue'
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
 export default {
   components: {
+    Username,
     HelloWorld,
     ForumListItem
 },
@@ -66,6 +76,7 @@ export default {
     const router = useRouter();
     const items = ref([])
     const isFetching = ref(false)
+    const authStore = useStore()
 
     const onClick = () => {
       router.push('/test')
@@ -91,7 +102,8 @@ export default {
       onClick,
       items,
       doRefresh,
-      isFetching
+      isFetching,
+      authStore
     }
   }
 }
