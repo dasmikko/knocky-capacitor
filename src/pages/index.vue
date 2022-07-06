@@ -4,23 +4,44 @@
       maxEdgeStart="20"
       side="start"
       content-id="main-content">
-      <ion-header>
-        <ion-toolbar translucent>
-          <ion-title>
-            <template v-if="authStore.isAuthenticated">
-              {{authStore.userInfo.username}}
-            </template>
-
-            <template v-if="!authStore.isAuthenticated">
-              Not Logged in
-            </template>
-          </ion-title>
-        </ion-toolbar>
-      </ion-header>
       <ion-content>
-        <template v-if="authStore.isAuthenticated">
-          <img :src="'https://cdn.knockout.chat/image/' + authStore.userInfo.avatar_url" alt="">
-        </template>
+        <header
+          class="p-4"
+          :style="{
+            'background-image': `url(https://cdn.knockout.chat/image/${authStore.isAuthenticated ? authStore.userInfo.background_url : null})`,
+            'background-size': 'cover',
+            'background-position': 'center',
+          }"
+        >
+          <template v-if="authStore.isAuthenticated">
+            <img
+              class="rounded-full h-16 mb-10"
+              :src="'https://cdn.knockout.chat/image/' + authStore.userInfo.avatar_url" alt="">
+
+            <div>
+              <div>{{authStore.userInfo.username}}</div>
+            </div>
+          </template>
+
+          <template v-if="!authStore.isAuthenticated">
+            Not Logged in
+          </template>
+        </header>
+
+        <ion-list>
+          <ion-item class="ion-activatable">
+            <ion-label>Subcriptions</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Latest threads</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Popular threads</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ion-menu>
 

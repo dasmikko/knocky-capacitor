@@ -42,7 +42,9 @@ import {
   IonRefresherContent,
   IonProgressBar,
   IonSlides,
-  IonSlide
+  IonSlide,
+  IonList,
+  IonItem,
  } from '@ionic/vue';
 
  import Schema from './components/bbcode/schema.vue'
@@ -81,6 +83,8 @@ app.component('IonRefresherContent', IonRefresherContent)
 app.component('IonProgressBar', IonProgressBar)
 app.component('IonSlides', IonSlides)
 app.component('IonSlide', IonSlide)
+app.component('IonList', IonList)
+app.component('IonItem', IonItem)
 
 app.component('Schema', Schema)
 

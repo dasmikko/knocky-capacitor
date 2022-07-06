@@ -71,32 +71,6 @@ export default {
       checkAuthState()
     })
 
-    watch(
-      network,
-      async (newNetworkState, oldNetworkState) => {
-        console.log(newNetworkState.isOnline)
-        if (!newNetworkState.isOnline) {
-          const toast = await toastController
-          .create({
-            message: 'You are currently offline.',
-            icon: wifi,
-            color: 'danger',
-            duration: 2000
-          })
-          toast.present()
-        } else {
-          const toast = await toastController
-          .create({
-            message: 'You are online again.',
-            icon: wifi,
-            color: 'success',
-            duration: 2000
-          })
-          toast.present()
-        }
-      }
-    )
-
 
     return {}
   }
