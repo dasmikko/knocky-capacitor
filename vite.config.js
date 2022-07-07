@@ -6,7 +6,9 @@ import Pages from "vite-plugin-pages";
 export default defineConfig({
   plugins: [
     vue(),
-    Pages(),
+    Pages({
+      importMode: 'sync'
+    }),
   ],
   server: {
     port: 8080
