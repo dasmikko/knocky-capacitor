@@ -6,6 +6,22 @@
           <ion-back-button :default-href="defaultHref"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ thread ? thread.title : 'Loading...' }}</ion-title>
+
+        <ion-buttons slot="primary">
+          <ion-button id="click-trigger">
+            <ion-icon slot="icon-only" :ios="ellipsisHorizontal" :md="ellipsisVertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-popover trigger="click-trigger" trigger-action="click">
+          <ion-list>
+            <ion-item class="ion-activatable ripple-parent" @click="doRefresh">
+              Reload
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-item>
+          </ion-list>
+        </ion-popover>
+
         <ion-progress-bar v-if="isFetching" type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
@@ -52,12 +68,17 @@ import Pagination from '../../components/shared/pagination/pagination.vue'
 import {toastController, useBackButton} from '@ionic/vue'
 import { useElementVisibility, useIntersectionObserver } from '@vueuse/core';
 
+import {
+  ellipsisHorizontal,
+  ellipsisVertical,
+} from 'ionicons/icons';
+
 export default {
   name: 'ThreadPage',
   components: {
     Pagination,
     SubforumListItem,
-    PostListItem
+    PostListItem,
   },
   setup () {
     const router = useRouter();
@@ -113,6 +134,7 @@ export default {
     }
 
     const doRefresh = async (event) => {
+      console.log(event)
       await loadThread()
       event.target.complete();
     }
@@ -126,6 +148,8 @@ export default {
     )
 
     return {
+      ellipsisHorizontal,
+      ellipsisVertical,
       router,
       route,
       thread,
