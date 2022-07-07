@@ -13,12 +13,12 @@
           </ion-button>
         </ion-buttons>
 
-        <ion-popover trigger="click-trigger" trigger-action="click">
+        <ion-popover trigger="click-trigger" trigger-action="click" dismiss-on-select>
           <ion-list>
-            <ion-item class="ion-activatable ripple-parent" @click="doRefresh">
+            <PopoverListItem @click="doRefresh">
+              <template #icon><ReloadIcon/></template>
               Reload
-              <ion-ripple-effect></ion-ripple-effect>
-            </ion-item>
+            </PopoverListItem>
           </ion-list>
         </ion-popover>
 
@@ -56,111 +56,71 @@
 </template>
 
 
-<script>
+<script setup>
 
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
 import { getThread } from '../../utils/api';
-import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
 import PostListItem from '../../components/thread/post/postListItem.vue';
-import { computed } from '@vue/reactivity';
 import Pagination from '../../components/shared/pagination/pagination.vue'
-import {toastController, useBackButton} from '@ionic/vue'
-import { useElementVisibility, useIntersectionObserver } from '@vueuse/core';
+import PopoverListItem from '../../components/shared/popoverListItem.vue'
+import { toastController } from '@ionic/vue'
+import ReloadIcon from 'vue-material-design-icons/Reload.vue'
 
 import {
   ellipsisHorizontal,
   ellipsisVertical,
 } from 'ionicons/icons';
 
-export default {
-  name: 'ThreadPage',
-  components: {
-    Pagination,
-    SubforumListItem,
-    PostListItem,
-  },
-  setup () {
-    const router = useRouter();
-    const route = useRoute();
-    const thread = ref(null)
-    const page = ref(1)
-    const isFetching = ref(false)
-    const contentRef = ref()
-    
-    const getContent = () => {
-      return document.querySelector('#thread-content')
-    }
-   
+const router = useRouter();
+const route = useRoute();
+const thread = ref(null)
+const page = ref(1)
+const isFetching = ref(false)
+const contentRef = ref()
 
-    onMounted(async () => {
-      loadThread()
+const getContent = () => {
+  return document.querySelector('#thread-content')
+}
+
+
+onMounted(async () => {
+  loadThread()
+})
+
+const defaultHref = computed(() => {
+  if (thread.value) return `/subforum/${thread.value.subforumId}`
+})
+
+const loadThread = async (event) => {
+  try {
+    isFetching.value = true
+    thread.value = await getThread(route.params.id, page.value)
+    isFetching.value = false
+  } catch (e) {
+    const toast = await toastController
+    .create({
+      message: 'Failed to get thread.',
+      color: 'danger',
+      duration: 2000
     })
-
-    /*useBackButton(10, (processNextHandler) => {
-      console.log('Handler was called!');
-
-      console.log(lightbox.value)
-
-      if (!lightBoxOpen.value) {
-        processNextHandler();
-      } else {
-        lightbox.value.pswp.close()
-      }
-
-    });*
-
-     */
-
-    const defaultHref = computed(() => {
-      if (thread.value) return `/subforum/${thread.value.subforumId}`
-    })
-
-    const loadThread = async (event) => {
-      try {
-        isFetching.value = true
-        thread.value = await getThread(route.params.id, page.value)
-        isFetching.value = false
-      } catch (e) {
-        const toast = await toastController
-        .create({
-          message: 'Failed to get thread.',
-          color: 'danger',
-          duration: 2000
-        })
-        isFetching.value = false
-        return toast.present()
-      }
-    }
-
-    const doRefresh = async (event) => {
-      console.log(event)
-      await loadThread()
-      event.target.complete();
-    }
-
-    watch(
-      page,
-      async (newPage, oldPage) => {
-        loadThread()
-        getContent().scrollToTop(500)
-      }
-    )
-
-    return {
-      ellipsisHorizontal,
-      ellipsisVertical,
-      router,
-      route,
-      thread,
-      contentRef,
-      doRefresh,
-      defaultHref,
-      page,
-      isFetching
-    }
+    isFetching.value = false
+    return toast.present()
   }
 }
+
+const doRefresh = async (event) => {
+  await loadThread()
+  if (event) event.target.complete();
+}
+
+watch(
+  page,
+  async (newPage, oldPage) => {
+    loadThread()
+    getContent().scrollToTop(500)
+  }
+)
 </script>
 
 
