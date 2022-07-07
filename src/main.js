@@ -91,7 +91,7 @@ app.component('IonList', IonList)
 app.component('IonItem', IonItem)
 app.component('IonLabel', IonLabel)
 app.component('IonRippleEffect', IonRippleEffect)
-app.component('IonIcon', IonIcon
+app.component('IonIcon', IonIcon)
 app.component('IonPopover', IonPopover)
 
 app.component('Schema', Schema)
