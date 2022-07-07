@@ -48,6 +48,10 @@ import {
   IonLabel,
   IonRippleEffect,
   IonIcon,
+<<<<<<< HEAD
+=======
+  IonPopover
+>>>>>>> main
 } from '@ionic/vue';
 
 import Schema from './components/bbcode/schema.vue'
@@ -91,6 +95,10 @@ app.component('IonItem', IonItem)
 app.component('IonLabel', IonLabel)
 app.component('IonRippleEffect', IonRippleEffect)
 app.component('IonIcon', IonIcon)
+<<<<<<< HEAD
+=======
+app.component('IonPopover', IonPopover)
+>>>>>>> main
 
 
 
