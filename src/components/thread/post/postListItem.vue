@@ -20,6 +20,16 @@
         :bbcode="post.content"
       />
     </div>
+
+    <div class="flex p-3" v-if="post.ratings.length">
+      <div
+        class="flex flex-col mr-3 justify-center items-center"
+        v-for="rating in post.ratings">
+        <img class="w-5 mb-1" :src="ratingList[rating.rating].url" :alt="ratingList[rating.rating].name">
+        <span class="text-xs text-neutral-300">{{rating.count}}</span>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -27,6 +37,8 @@
 import { computed } from '@vue/reactivity';
 import BbcodeRenderer from '../../bbcode/bbcodeRenderer.vue';
 import Username from '../../shared/username.vue';
+import ratingList from '../../../utils/ratingList.json'
+
 export default {
     name: "PostListItem",
     props: {
@@ -42,7 +54,8 @@ export default {
       })
 
       return {
-        headerStyles
+        headerStyles,
+        ratingList
       }
     }
 }
