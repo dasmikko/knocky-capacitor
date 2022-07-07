@@ -46,10 +46,11 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonRippleEffect
- } from '@ionic/vue';
+  IonRippleEffect,
+  IonIcon,
+} from '@ionic/vue';
 
- import Schema from './components/bbcode/schema.vue'
+import Schema from './components/bbcode/schema.vue'
 
 
 import './assets/themes/dark.scss'
@@ -89,6 +90,9 @@ app.component('IonList', IonList)
 app.component('IonItem', IonItem)
 app.component('IonLabel', IonLabel)
 app.component('IonRippleEffect', IonRippleEffect)
+app.component('IonIcon', IonIcon)
+
+
 
 app.component('Schema', Schema)
 

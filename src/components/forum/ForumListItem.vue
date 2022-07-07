@@ -15,7 +15,7 @@
     </header>
     <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses">
       <p class="text-sm truncate text-ellipsis overflow-hidden">{{item.lastPost.thread.title}}</p>
-      <p class="text-sm text-neutral-400">Last post by <Username :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
+      <p class="text-xs text-neutral-400">Last post by <Username :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
       <ion-ripple-effect></ion-ripple-effect>
     </section>
   </div>
