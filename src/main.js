@@ -45,6 +45,8 @@ import {
   IonSlide,
   IonList,
   IonItem,
+  IonLabel,
+  IonRippleEffect
  } from '@ionic/vue';
 
  import Schema from './components/bbcode/schema.vue'
@@ -85,6 +87,8 @@ app.component('IonSlides', IonSlides)
 app.component('IonSlide', IonSlide)
 app.component('IonList', IonList)
 app.component('IonItem', IonItem)
+app.component('IonLabel', IonLabel)
+app.component('IonRippleEffect', IonRippleEffect)
 
 app.component('Schema', Schema)
 
