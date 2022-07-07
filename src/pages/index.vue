@@ -6,7 +6,7 @@
       content-id="main-content">
       <ion-content>
         <header
-          class="p-4"
+          class="p-4 bg-neutral-700"
           :style="{
             'background-image': `url(https://cdn.knockout.chat/image/${authStore.isAuthenticated ? authStore.userInfo.background_url : null})`,
             'background-size': 'cover',
@@ -24,23 +24,47 @@
           </template>
 
           <template v-if="!authStore.isAuthenticated">
-            Not Logged in
+            <div
+              class="rounded-full h-16 w-16 mb-10 bg-neutral-800"
+              :style="{
+              'background-image': `url(/punchy.png)`,
+              'background-size': 'contain',
+              'background-repeat': 'no-repeat',
+              'background-position': 'center',
+            }"
+              >
+            </div>
+            <div>
+              <div>Not logged in</div>
+            </div>
           </template>
         </header>
 
         <ion-list>
-          <ion-item class="ion-activatable">
-            <ion-label>Subcriptions</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Latest threads</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Popular threads</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Settings</ion-label>
-          </ion-item>
+          <DrawerListItem v-if="authStore.isAuthenticated" @click="router.push('/subscriptions')">
+            <template #icon>
+              <NewspaperVariantMultipleIcon/>
+            </template>
+            Subcriptions
+          </DrawerListItem>
+          <DrawerListItem @click="router.push('/latest')">
+            <template #icon>
+              <ClockTimeFourOutlineIcon/>
+            </template>
+            Latest threads
+          </DrawerListItem>
+          <DrawerListItem @click="router.push('/popular')">
+            <template #icon>
+              <FireIcon/>
+            </template>
+            Popular threads
+          </DrawerListItem>
+          <DrawerListItem disabled>
+            <template #icon>
+              <CogIcon/>
+            </template>
+            Settings
+          </DrawerListItem>
         </ion-list>
       </ion-content>
     </ion-menu>
@@ -56,7 +80,6 @@
     </ion-header>
 
     <ion-content
-      :fullscreen="true" 
       id="main-content">   
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
@@ -83,7 +106,12 @@ import { getForum } from '../utils/api'
 import ForumListItem from '../components/forum/ForumListItem.vue';
 import {useStore} from '../stores/auth.js'
 import Username from '../components/shared/username.vue'
-import { toastController } from '@ionic/vue'; 
+import DrawerListItem from '../components/drawer/drawerListItem.vue'
+import { toastController } from '@ionic/vue';
+import NewspaperVariantMultipleIcon from 'vue-material-design-icons/NewspaperVariantMultiple.vue'
+import ClockTimeFourOutlineIcon from 'vue-material-design-icons/ClockTimeFourOutline.vue'
+import FireIcon from 'vue-material-design-icons/Fire.vue'
+import CogIcon from 'vue-material-design-icons/Cog.vue'
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
@@ -91,7 +119,12 @@ export default {
   components: {
     Username,
     HelloWorld,
-    ForumListItem
+    ForumListItem,
+    DrawerListItem,
+    NewspaperVariantMultipleIcon,
+    ClockTimeFourOutlineIcon,
+    FireIcon,
+    CogIcon,
 },
   setup () {
     const router = useRouter();

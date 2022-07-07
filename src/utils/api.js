@@ -72,3 +72,22 @@ export function getUser () {
   })
 }
 
+export function getAlerts (page = 1, hideNsfw = true) {
+  return KnockoutApiCall('get', {
+    url: `/v2/alerts/${page}?hideNsfw=${hideNsfw}`
+  })
+}
+
+export function getLatestThreads () {
+  return KnockoutApiCall('get', {
+    url: `/v2/threads/latest`
+  })
+}
+
+export function getPopularThreads () {
+  return KnockoutApiCall('get', {
+    url: `/v2/threads/popular`
+  })
+}
+
+
