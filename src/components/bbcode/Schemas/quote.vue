@@ -3,7 +3,7 @@
     class="bg-neutral-700 relative border border-neutral-900 mb-4 rounded overflow-hidden"
   > 
     <header class="bg-neutral-800 p-2">{{node.shortcode.properties.username}} posted:</header>
-    <div class="content p-2 mb-4"
+    <div class="content p-2 pb-6 mb-4"
       :class="{
         'max-h-48': !expanded
       }"
