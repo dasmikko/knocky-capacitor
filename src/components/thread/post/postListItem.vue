@@ -28,7 +28,29 @@
         <img class="w-5 mb-1" :src="ratingList[rating.rating].url" :alt="ratingList[rating.rating].name">
         <span class="text-xs text-neutral-300">{{rating.count}}</span>
       </div>
+      <div
+        :id="`post-${post.id}-click-trigger`"
+        class="flex flex-col mr-3 justify-center items-center ion-activatable">
+        <EyeIcon class="text-neutral-400"/>
+      </div>
+      <ion-popover
+        :trigger="`post-${post.id}-click-trigger`"
+        trigger-action="click"
+        dismiss-on-select>
+        <div style="max-height: 200px">
+          <ul v-for="rating in post.ratings">
+            <li class="font-bold flex p-2 bg-neutral-700">
+              <img class="w-5 h-5 mr-2" :src="ratingList[rating.rating].url" :alt="ratingList[rating.rating].name">
+              {{ ratingList[rating.rating].name }}
+            </li>
+            <li v-for="user in rating.users"
+                class="px-2 py-1">
+              <Username :user="user"/>
+            </li>
+          </ul>
+        </div>
 
+      </ion-popover>
     </div>
   </div>
 </template>
@@ -38,6 +60,7 @@ import { computed } from '@vue/reactivity';
 import BbcodeRenderer from '../../bbcode/bbcodeRenderer.vue';
 import Username from '../../shared/username.vue';
 import ratingList from '../../../utils/ratingList.json'
+import EyeIcon  from 'vue-material-design-icons/Eye.vue'
 
 export default {
     name: "PostListItem",
@@ -45,7 +68,11 @@ export default {
       containerRef: Object,
       post: Object,
     },
-    components: { BbcodeRenderer, Username },
+    components: {
+      BbcodeRenderer,
+      Username,
+      EyeIcon
+    },
     setup(props) {
       const headerStyles = computed(() => {
         return {
