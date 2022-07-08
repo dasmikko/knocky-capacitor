@@ -60,10 +60,10 @@
 
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref, watch, computed } from 'vue';
-import { getThread } from '../../utils/api';
-import PostListItem from '../../components/thread/post/postListItem.vue';
-import Pagination from '../../components/shared/pagination/pagination.vue'
-import PopoverListItem from '../../components/shared/popoverListItem.vue'
+import { getThread } from '../../../utils/api';
+import PostListItem from '../../../components/thread/post/postListItem.vue';
+import Pagination from '../../../components/shared/pagination/pagination.vue'
+import PopoverListItem from '../../../components/shared/popoverListItem.vue'
 import { toastController } from '@ionic/vue'
 import ReloadIcon from 'vue-material-design-icons/Reload.vue'
 
@@ -75,7 +75,7 @@ import {
 const router = useRouter();
 const route = useRoute();
 const thread = ref(null)
-const page = ref(1)
+const page = ref(route.query.page)
 const isFetching = ref(false)
 const contentRef = ref()
 

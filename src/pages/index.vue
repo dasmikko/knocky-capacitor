@@ -45,7 +45,13 @@
             <template #icon>
               <NewspaperVariantMultipleIcon/>
             </template>
-            Subcriptions
+            Subscriptions
+          </DrawerListItem>
+          <DrawerListItem v-if="!authStore.isAuthenticated" @click="router.push('/login')">
+            <template #icon>
+              <DoorIcon/>
+            </template>
+            Login
           </DrawerListItem>
           <DrawerListItem @click="router.push('/latest')">
             <template #icon>
@@ -109,6 +115,7 @@ import Username from '../components/shared/username.vue'
 import DrawerListItem from '../components/drawer/drawerListItem.vue'
 import { toastController } from '@ionic/vue';
 import NewspaperVariantMultipleIcon from 'vue-material-design-icons/NewspaperVariantMultiple.vue'
+import DoorIcon from 'vue-material-design-icons/Door.vue'
 import ClockTimeFourOutlineIcon from 'vue-material-design-icons/ClockTimeFourOutline.vue'
 import FireIcon from 'vue-material-design-icons/Fire.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
@@ -125,6 +132,7 @@ export default {
     ClockTimeFourOutlineIcon,
     FireIcon,
     CogIcon,
+    DoorIcon,
 },
   setup () {
     const router = useRouter();
