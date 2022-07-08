@@ -22,10 +22,11 @@ import { caretForwardCircle, close, heart, trash, share } from 'ionicons/icons';
 import ChatBubbleIcon from 'vue-material-design-icons/Chat.vue';
 import ReplyAllIcon from 'vue-material-design-icons/ReplyAll.vue';
 import * as timeago from 'timeago.js';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { getIcon } from '../../utils/icons';
 import Username from '../shared/username.vue';
+import {numberPicker} from "../../utils/picker";
 
 export default {
   name: "ForumListItem",
@@ -48,11 +49,10 @@ export default {
     })
 
     const onClick = () => {
-      router.push(`/thread/${props.thread.id}`)
+      router.push(`/thread/${props.thread.id}/1`)
     }
 
     const onLongPress = async () => {
-      console.log(trash)
       const actionSheet = await actionSheetController
           .create({
             buttons: [
@@ -67,44 +67,11 @@ export default {
                   type: 'delete'
                 },
                 handler: async () => {
-                  const picker = await pickerController.create({
-                    columns: [
-                      {
-                        name: 'languages',
-                        options: [
-                          {
-                            text: 'JavaScript',
-                            value: 'javascript',
-                          },
-                          {
-                            text: 'TypeScript',
-                            value: 'typescript',
-                          },
-                          {
-                            text: 'Rust',
-                            value: 'rust',
-                          },
-                          {
-                            text: 'C#',
-                            value: 'c#',
-                          },
-                        ],
-                      },
-                    ],
-                    buttons: [
-                      {
-                        text: 'Cancel',
-                        role: 'cancel',
-                      },
-                      {
-                        text: 'Confirm',
-                        handler: (value) => {
-                          window.alert(`You selected: ${value.languages.value}`);
-                        },
-                      },
-                    ],
-                  });
-                  await picker.present();
+                  let picker = await numberPicker(1, 20, 1, {}, (val) => {
+                    console.log(val)
+                    router.push(`/thread/${props.thread.id}/${val}`)
+                  })
+                  await picker.present()
                 },
               },
             ],
