@@ -45,9 +45,7 @@ const items = ref([])
 const isFetching = ref(false)
 const authStore = useStore()
 
-const onClick = () => {
-  router.push('/test')
-}
+
 
 const loadSubscriptions = async () => {
   try {
