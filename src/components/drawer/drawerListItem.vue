@@ -6,7 +6,7 @@
     }"
   >
     <div v-if="$slots['icon']" class="mr-4"><slot name="icon"></slot></div>
-    <slot></slot>
+    <div class="text-sm"><slot></slot></div>
     <ion-ripple-effect></ion-ripple-effect>
   </div>
 </template>

@@ -15,7 +15,7 @@
         >
           <template v-if="authStore.isAuthenticated">
             <img
-              class="rounded-full h-16 mb-10"
+              class="rounded-full mt-2 h-16 mb-10"
               :src="'https://cdn.knockout.chat/image/' + authStore.userInfo.avatar_url" alt="">
 
             <div>
@@ -71,6 +71,12 @@
             </template>
             Settings
           </DrawerListItem>
+          <DrawerListItem v-if="authStore.isAuthenticated" @click="onLogout">
+            <template #icon>
+              <LogoutIcon/>
+            </template>
+            Logout
+          </DrawerListItem>
         </ion-list>
       </ion-content>
     </ion-menu>
@@ -108,7 +114,7 @@ import { App } from '@capacitor/app';
 import HelloWorld from '../components/HelloWorld.vue'
 import { useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getForum } from '../utils/api'
+import {getForum, logout} from '../utils/api'
 import ForumListItem from '../components/forum/ForumListItem.vue';
 import {useStore} from '../stores/auth.js'
 import Username from '../components/shared/username.vue'
@@ -118,7 +124,9 @@ import NewspaperVariantMultipleIcon from 'vue-material-design-icons/NewspaperVar
 import DoorIcon from 'vue-material-design-icons/Door.vue'
 import ClockTimeFourOutlineIcon from 'vue-material-design-icons/ClockTimeFourOutline.vue'
 import FireIcon from 'vue-material-design-icons/Fire.vue'
+import LogoutIcon from 'vue-material-design-icons/Logout.vue'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
+import {Browser} from "@capacitor/browser";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
@@ -133,6 +141,7 @@ export default {
     FireIcon,
     CogIcon,
     DoorIcon,
+    LogoutIcon,
 },
   setup () {
     const router = useRouter();
@@ -168,6 +177,11 @@ export default {
       event.target.complete();
     }
 
+    const onLogout = async (event) => {
+      const browser = Browser
+      await browser.open({ url: `https://knockout.chat/logout` })
+    }
+
     onMounted(async () => {
       loadSubforums()
     })
@@ -177,6 +191,7 @@ export default {
       onClick,
       items,
       doRefresh,
+      onLogout,
       isFetching,
       authStore
     }

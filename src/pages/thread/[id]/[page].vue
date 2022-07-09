@@ -75,7 +75,7 @@ import {
 const router = useRouter();
 const route = useRoute();
 const thread = ref(null)
-const page = ref(route.query.page)
+const page = ref(parseInt(route.params.page))
 const isFetching = ref(false)
 const contentRef = ref()
 

@@ -26,12 +26,7 @@
       "src": "images/touch/homescreen144.png",
       "sizes": "144x144",
       "type": "image/png"
-    }, 
-    {
-      "src": "images/touch/homescreen168.png",
-      "sizes": "168x168",
-      "type": "image/png"
-    }, 
+    },
     {
       "src": "images/touch/homescreen192.png",
       "sizes": "192x192",

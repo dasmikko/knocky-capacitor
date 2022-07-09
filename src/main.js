@@ -66,7 +66,9 @@ const pinia = createPinia()
 
 const app = createApp(App)
 
-app.use(IonicVue)
+app.use(IonicVue, {
+  mode: 'md',
+})
 app.use(router);
 app.use(GesturePlugin)
 app.use(MotionPlugin)
@@ -94,7 +96,6 @@ app.component('IonRippleEffect', IonRippleEffect)
 app.component('IonIcon', IonIcon)
 app.component('IonPopover', IonPopover)
 app.component('Schema', Schema)
-
 
 router.isReady().then(() => {
   app.mount('#app');
