@@ -1,5 +1,5 @@
 <template>
-  <a class="link" :href="node.shortcode.properties.href">
+  <a class="link" target="_blank" :href="node.shortcode.properties.href">
     <template v-if="!node.shortcode.content">{{node.shortcode.properties.href}}</template>
     <template v-else>{{node.shortcode.content}}</template>
   </a>

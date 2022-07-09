@@ -3,9 +3,9 @@
     class="bg-neutral-700 relative border border-neutral-900 rounded overflow-hidden"
   > 
     <header class="bg-neutral-800 p-2">{{node.shortcode.properties.username}} posted:</header>
-    <div class="content p-2 pb-6 mb-4"
+    <div class="content p-2"
       :class="{
-        'max-h-48': !expanded
+        'expanded': expanded
       }"
     >
       <Schema
@@ -17,10 +17,12 @@
       />
       <span v-else>{{node.text}}</span>
     </div>
-    <footer class="bg-neutral-700 w-full flex justify-center items-center absolute bottom-0 p-2" @click="expanded = !expanded">
-      <chevron-down-icon v-if="!expanded"/>
-      <chevron-up-icon v-else/>
-    </footer>
+    <div class="expander" @click="expanded = !expanded">
+      <div class="bg-neutral-700 w-full flex justify-center items-center absolute bottom-0 p-2">
+        <chevron-down-icon v-if="!expanded"/>
+        <chevron-up-icon v-else/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,6 +42,18 @@ const expanded = ref(false)
 
 </script>
 
-<style lang="scss">
-  
+<style lang="scss" scoped>
+  .content {
+    @apply transition-all;
+    max-height: 200px;
+    &.expanded {
+      @apply mb-8;
+      max-height: unset;
+    }
+  }
+
+  .expander {
+    @apply h-full w-full top-0 absolute;
+    min-height: 200px;
+  }
 </style>

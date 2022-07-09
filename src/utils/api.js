@@ -25,7 +25,7 @@ function KnockoutApiCall(type, options = {}) {
     const baseUrl = 'https://api.knockout.chat'
 
     let mergedOptions = {
-      method: 'get',
+      method: type,
       baseURL: baseUrl,
       withCredentials: true,
       ...options
@@ -89,5 +89,12 @@ export function getPopularThreads () {
     url: `/v2/threads/popular`
   })
 }
+
+export function logout () {
+  return KnockoutApiCall('post', {
+    url: `/auth/logout`
+  })
+}
+
 
 

@@ -67,8 +67,8 @@ export default {
                   type: 'delete'
                 },
                 handler: async () => {
-                  let picker = await numberPicker(1, 20, 1, {}, (val) => {
-                    console.log(val)
+                  const totalPages = Math.ceil(props.thread.postCount / 20)
+                  let picker = await numberPicker(1, totalPages, 1, {}, (val) => {
                     router.push(`/thread/${props.thread.id}/${val}`)
                   })
                   await picker.present()
