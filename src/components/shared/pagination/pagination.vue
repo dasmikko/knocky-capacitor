@@ -5,9 +5,15 @@
         <MenuLeftIcon/>
       </div>
     </div>
-    <ion-content style="height: 28px" :scrollX="true" :scrollY="false" :force-overscroll="true">
+    <ion-content
+        id="pagination-content"
+        style="height: 28px"
+        @ionScroll="logScrolling"
+        :scrollX="true"
+        :scrollY="false"
+        :force-overscroll="true">
       <div class="pages">
-        <div class="page-button"
+        <div class="page-button" :id="'page-'+pageNum"
             v-for="pageNum in totalPages"
             :class="{ 'active': page === pageNum }"
             @click="onPageClick(pageNum)"
@@ -25,7 +31,7 @@
 <script>
 import MenuLeftIcon from 'vue-material-design-icons/MenuLeft.vue'
 import MenuRightIcon from 'vue-material-design-icons/MenuRight.vue'
-import {computed} from 'vue'
+import {computed, nextTick, onMounted} from 'vue'
 
 export default {
   name: 'pagination',
@@ -43,15 +49,33 @@ export default {
   },
   emits: ['update:page'],
   setup(props, {emit}) {
+
+    const getContent = () => {
+      return document.querySelector('#pagination-content')
+    }
+
     const totalPages = computed(() => Math.ceil(props.totalCount / props.perPage))
 
     const onPageClick = (page) => {
       emit('update:page', page)
     }
 
+    const logScrolling = (event) => {
+      console.log(event)
+    }
+
+    onMounted(() => {
+      nextTick(() => {
+        const pageButton = document.querySelector('#page-'+props.page)
+        getContent().scrollToPoint(200, 0, 1000)
+      })
+
+    })
+
     return {
       totalPages,
-      onPageClick
+      onPageClick,
+      logScrolling
     }
   }
 }
