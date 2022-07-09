@@ -9,21 +9,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-<<<<<<< HEAD
-      <p>This isn't working yet, it'a just for testing!</p>
-      <div class="flex flex-col px-4 justify-center h-full">
-        <IonButton @click="onClickLogin('google')">Google</IonButton>
-        <IonButton @click="onClickLogin('twitter')">Twitter</IonButton>
-        <IonButton @click="onClickLogin('github')">Github</IonButton>
-        <IonButton @click="onClickLogin('steam')">Steam</IonButton>
-=======
       <div class="flex flex-col px-4 justify-center h-full">
         <p class="text-center mb-2">Notice: This isn't working properly on iOS yet!</p>
         <IonButton @click="onClickLogin('google')"><GoogleIcon class="mr-2"/> Google</IonButton>
         <IonButton class="twitter" @click="onClickLogin('twitter')"><TwitterIcon class="mr-2"/> Twitter</IonButton>
         <IonButton class="github" @click="onClickLogin('github')"><GithubIcon class="mr-2"/> Github</IonButton>
         <IonButton class="steam" @click="onClickLogin('steam')"><SteamIcon class="mr-2"/> Steam</IonButton>
->>>>>>> main
       </div>
     </ion-content>
   </ion-page>
