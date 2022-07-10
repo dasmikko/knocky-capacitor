@@ -101,7 +101,7 @@ const loadThread = async (event) => {
     isFetching.value = false
 
     await nextTick(() => {
-      if (route.hash && !hasScrolledToPost) {
+      if (route.hash && !hasScrolledToPost.value) {
         let element = document.querySelector(route.hash);
         if (element) {
           element.scrollIntoView();
