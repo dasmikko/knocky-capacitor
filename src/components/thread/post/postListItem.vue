@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-800 mb-4 rounded">
+  <div class="bg-neutral-800 mb-4 rounded" :id="`post-${post.id}`">
     <header>
       <div class="user-info">
         <img class="mr-4" :src="`https://cdn.knockout.chat/image/${post.user.avatarUrl}`" alt="">
@@ -54,39 +54,24 @@
   </div>
 </template>
 
-<script>
-import { computed } from '@vue/reactivity';
+<script setup>
+import { computed } from 'vue';
 import BbcodeRenderer from '../../bbcode/bbcodeRenderer.vue';
 import Username from '../../shared/username.vue';
 import ratingList from '../../../utils/ratingList.json'
 import EyeIcon  from 'vue-material-design-icons/Eye.vue'
 import Popper from "vue3-popper"
 
-export default {
-    name: "PostListItem",
-    props: {
-      containerRef: Object,
-      post: Object,
-    },
-    components: {
-      BbcodeRenderer,
-      Username,
-      EyeIcon,
-      Popper
-    },
-    setup(props) {
-      const headerStyles = computed(() => {
-        return {
-          'background-image': `https://cdn.knockout.chat/image/${props.post.user.backgroundUrl}`
-        }
-      })
+const props = defineProps({
+  containerRef: Object,
+  post: Object,
+})
 
-      return {
-        headerStyles,
-        ratingList
-      }
-    }
-}
+const headerStyles = computed(() => {
+  return {
+    'background-image': `https://cdn.knockout.chat/image/${props.post.user.backgroundUrl}`
+  }
+})
 
 </script>
 

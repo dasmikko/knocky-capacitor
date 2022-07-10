@@ -27,6 +27,7 @@
         <div class="p-2">
           <subforum-list-item
             v-for="thread in subforum.threads"
+            :key="thread.id"
             :thread="thread"
           />
         </div>
