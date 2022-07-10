@@ -61,7 +61,7 @@
 
 import { useRoute, useRouter } from 'vue-router';
 import {onMounted, ref, watch, computed, nextTick} from 'vue'
-import { getThread } from '../../../utils/api';
+import {createAlert, getThread, readThreads} from '../../../utils/api'
 import PostListItem from '../../../components/thread/post/postListItem.vue';
 import Pagination from '../../../components/shared/pagination/pagination.vue'
 import PopoverListItem from '../../../components/shared/popoverListItem.vue'
@@ -87,7 +87,7 @@ const getContent = () => {
 
 
 onMounted(async () => {
-  loadThread()
+  await loadThread()
 })
 
 const defaultHref = computed(() => {
@@ -111,7 +111,6 @@ const loadThread = async (event) => {
     })
 
   } catch (e) {
-    console.log(e)
     const toast = await toastController
     .create({
       message: 'Failed to get thread.',
@@ -128,6 +127,31 @@ const doRefresh = async (event) => {
   if (event) event.target.complete();
 }
 
+// Subscriptions
+const updateAlerts = () => {
+  const lastPostNumber = thread.value.posts[thread.value.posts.length - 1].threadPostNumber;
+
+  if (thread.value.subscribed) {
+    if (thread.value.subscriptionLastPostNumber == null ||
+      thread.value.subscriptionLastPostNumber < lastPostNumber) {
+      createAlert(thread.value.id, lastPostNumber)
+    }
+  }
+}
+
+// Read thread
+const updateReadThread = () => {
+  const lastPostDate = thread.value.posts[thread.value.posts.length - 1].createdAt;
+  console.log(thread.value.readThreadLastSeen, lastPostDate)
+  if (thread.value.readThreadLastSeen == null ||
+    new Date(thread.value.readThreadLastSeen) < new Date(lastPostDate)) {
+    console.log('Update read thread')
+    readThreads(thread.value.id, lastPostDate)
+  }
+}
+
+
+
 watch(
   page,
   async (newPage, oldPage) => {
@@ -140,6 +164,14 @@ watch(
       null,
       `/thread/${route.params.id}/${newPage}`
     );
+  }
+)
+
+watch(
+  thread,
+  (newThreadData) => {
+    updateAlerts()
+    updateReadThread()
   }
 )
 </script>

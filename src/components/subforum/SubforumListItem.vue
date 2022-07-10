@@ -85,7 +85,7 @@ const onLongPress = async () => {
 
   .unreadPosts-container {
     .inner {
-      @apply bg-sky-600 inline-block rounded py-1 px-2 text-sm mb-2;
+      @apply bg-sky-600 inline-block rounded py-1 px-2 text-sm mt-1 mb-1;
     }
 
   }

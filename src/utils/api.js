@@ -90,6 +90,31 @@ export function getPopularThreads () {
   })
 }
 
+export function createAlert (threadId, lastPostNumber) {
+  return KnockoutApiCall('post', {
+    url: `/alert`,
+    data: {
+      threadId,
+      lastPostNumber
+    }
+  })
+}
+
+export function readThreads (threadId, lastSeen) {
+  return KnockoutApiCall('post', {
+    url: `/readThreads`,
+    headers: {
+      'content-format-version': 1
+    },
+    data: {
+      threadId,
+      lastSeen
+    }
+  })
+}
+
+
+
 export function logout () {
   return KnockoutApiCall('post', {
     url: `/auth/logout`
