@@ -42,6 +42,7 @@
         <div class="p-2">
           <post-list-item
             v-for="post in thread.posts"
+            :key="post.id"
             :post="post"
           />
         </div>
@@ -59,7 +60,7 @@
 <script setup>
 
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted, ref, watch, computed } from 'vue';
+import {onMounted, ref, watch, computed, nextTick} from 'vue'
 import { getThread } from '../../../utils/api';
 import PostListItem from '../../../components/thread/post/postListItem.vue';
 import Pagination from '../../../components/shared/pagination/pagination.vue'
@@ -78,6 +79,7 @@ const thread = ref(null)
 const page = ref(parseInt(route.params.page))
 const isFetching = ref(false)
 const contentRef = ref()
+const hasScrolledToPost = ref(false)
 
 const getContent = () => {
   return document.querySelector('#thread-content')
@@ -89,7 +91,7 @@ onMounted(async () => {
 })
 
 const defaultHref = computed(() => {
-  if (thread.value) return `/subforum/${thread.value.subforumId}`
+  if (thread.value) return `/subforum/${thread.value.subforumId}/1`
 })
 
 const loadThread = async (event) => {
@@ -97,7 +99,19 @@ const loadThread = async (event) => {
     isFetching.value = true
     thread.value = await getThread(route.params.id, page.value)
     isFetching.value = false
+
+    await nextTick(() => {
+      if (route.hash && !hasScrolledToPost) {
+        let element = document.querySelector(route.hash);
+        if (element) {
+          element.scrollIntoView();
+          hasScrolledToPost.value = true
+        }
+      }
+    })
+
   } catch (e) {
+    console.log(e)
     const toast = await toastController
     .create({
       message: 'Failed to get thread.',
@@ -119,6 +133,13 @@ watch(
   async (newPage, oldPage) => {
     loadThread()
     getContent().scrollToTop(500)
+
+    // Update the page inside the url
+    history.pushState(
+      {},
+      null,
+      `/thread/${route.params.id}/${newPage}`
+    );
   }
 )
 </script>
