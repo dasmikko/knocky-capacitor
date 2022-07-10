@@ -1,6 +1,6 @@
 <template>
   <div class="forum-list-item">
-    <header class="p-2 flex ion-activatable ripple-parent bg-neutral-800" @click="router.push(`/subforum/${item.id}`)">
+    <header class="p-2 flex ion-activatable ripple-parent bg-neutral-800" @click="router.push(`/subforum/${item.id}/1`)">
       <div class="flex-1">
         <p class="text-lg font-bold">{{item.name}}</p>
         <div class="flex text-xs">

@@ -46,9 +46,9 @@
 
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
-import {getSubforum, getThread} from '../../utils/api'
-import SubforumListItem from '../../components/subforum/SubforumListItem.vue';
-import Pagination from '../../components/shared/pagination/pagination.vue';
+import {getSubforum, getThread} from '../../../utils/api.js'
+import SubforumListItem from '../../../components/subforum/SubforumListItem.vue';
+import Pagination from '../../../components/shared/pagination/pagination.vue';
 import { toastController } from '@ionic/vue';
 
 // This starter template is using Vue 3 <script setup> SFCs
@@ -62,7 +62,7 @@ export default {
   setup () {
     const router = useRouter();
     const route = useRoute();
-    const page = ref(1)
+    const page = ref(parseInt(route.params.page))
     const isFetching = ref(false)
     const subforum = ref(null)
     const contentRef = ref(null)
@@ -103,6 +103,13 @@ export default {
       async (newPage, oldPage) => {
         loadSubforum()
         getContent().scrollToTop(500)
+
+        // Update the page inside the url
+        history.pushState(
+          {},
+          null,
+          `/subforum/${route.params.id}/${newPage}`
+        );
       }
     )
 
