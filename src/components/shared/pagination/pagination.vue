@@ -5,21 +5,13 @@
         <MenuLeftIcon/>
       </div>
     </div>
-    <ion-content
-        id="pagination-content"
-        style="height: 28px"
-        @ionScroll="logScrolling"
-        :scrollX="true"
-        :scrollY="false"
-        :force-overscroll="true">
-      <div class="pages">
-        <div class="page-button" :id="'page-'+pageNum"
-            v-for="pageNum in totalPages"
-            :class="{ 'active': page === pageNum }"
-            @click="onPageClick(pageNum)"
-        >{{pageNum}}</div>
-      </div>
-    </ion-content>
+    <div class="pages" ref="paginationContent">
+      <div class="page-button" :id="'page-'+pageNum"
+          v-for="pageNum in totalPages"
+          :class="{ 'active': page === pageNum }"
+          @click="onPageClick(pageNum)"
+      >{{pageNum}}</div>
+    </div>
     <div class="end">
       <div class="page-button" :class="{ disabled: page === totalPages}" @click="onPageClick(page + 1)">
         <MenuRightIcon/>
@@ -31,7 +23,7 @@
 <script>
 import MenuLeftIcon from 'vue-material-design-icons/MenuLeft.vue'
 import MenuRightIcon from 'vue-material-design-icons/MenuRight.vue'
-import {computed, nextTick, onMounted} from 'vue'
+import {computed, nextTick, onMounted, watch, ref} from 'vue'
 
 export default {
   name: 'pagination',
@@ -49,6 +41,7 @@ export default {
   },
   emits: ['update:page'],
   setup(props, {emit}) {
+    const paginationContent = ref(null)
 
     const getContent = () => {
       return document.querySelector('#pagination-content')
@@ -67,15 +60,23 @@ export default {
     onMounted(() => {
       nextTick(() => {
         const pageButton = document.querySelector('#page-'+props.page)
-        getContent().scrollToPoint(200, 0, 1000)
+        paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
       })
-
     })
+
+    watch(
+      () => props.page,
+      (page) => {
+        const pageButton = document.querySelector('#page-'+page)
+        paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
+      }
+    );
 
     return {
       totalPages,
       onPageClick,
-      logScrolling
+      logScrolling,
+      paginationContent
     }
   }
 }
@@ -86,7 +87,7 @@ export default {
     @apply flex px-2;
 
     .pages {
-      @apply flex-1 flex flex-row overflow-auto h-12;
+      @apply flex-1 flex flex-row overflow-auto;
 
       &::-webkit-scrollbar {
         display: none;
