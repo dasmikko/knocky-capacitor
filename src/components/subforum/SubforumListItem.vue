@@ -1,7 +1,7 @@
 <template>
   <div class="subforum-list-item ">
     <div class="flex">
-      <div class="w-12 h-auto flex-shrink-0 mr-4 p-2 flex items-center bg-neutral-800">
+      <div class="w-12 h-auto flex-shrink-0 mr-4 p-2 flex items-center bg-knockoutGray-700">
         <img class="max-w-full" :src="threadIconUrl" alt=""/>
       </div>
 
@@ -80,7 +80,7 @@ const onLongPress = async () => {
 
 <style lang="scss" scoped>
   .subforum-list-item {
-    @apply bg-neutral-900 rounded mb-2 overflow-hidden;
+    @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
   }
 
   .unreadPosts-container {

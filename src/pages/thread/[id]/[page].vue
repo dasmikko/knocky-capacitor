@@ -142,10 +142,8 @@ const updateAlerts = () => {
 // Read thread
 const updateReadThread = () => {
   const lastPostDate = thread.value.posts[thread.value.posts.length - 1].createdAt;
-  console.log(thread.value.readThreadLastSeen, lastPostDate)
   if (thread.value.readThreadLastSeen == null ||
     new Date(thread.value.readThreadLastSeen) < new Date(lastPostDate)) {
-    console.log('Update read thread')
     readThreads(thread.value.id, lastPostDate)
   }
 }

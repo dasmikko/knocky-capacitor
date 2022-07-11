@@ -53,13 +53,9 @@ export default {
       emit('update:page', page)
     }
 
-    const logScrolling = (event) => {
-      console.log(event)
-    }
-
     onMounted(() => {
       nextTick(() => {
-        const pageButton = document.querySelector('#page-'+props.page)
+        const pageButton = paginationContent.value.querySelector('#page-'+props.page)
         paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
       })
     })
@@ -67,7 +63,7 @@ export default {
     watch(
       () => props.page,
       (page) => {
-        const pageButton = document.querySelector('#page-'+page)
+        const pageButton = paginationContent.value.querySelector('#page-'+page)
         paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
       }
     );
@@ -75,7 +71,6 @@ export default {
     return {
       totalPages,
       onPageClick,
-      logScrolling,
       paginationContent
     }
   }
