@@ -24,7 +24,20 @@
           :per-page="40"
           :total-count="subforum.totalThreads"/>
 
-        <div class="p-2">
+        <div
+          v-motion
+          :initial="{ opacity: 0, y: 100 }"
+          :enter="{
+            opacity: 1, y: 0,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 30,
+              mass: 0.5,
+            },
+          }"
+          v-if="subforum.threads.length"
+          class="p-2">
           <subforum-list-item
             v-for="thread in subforum.threads"
             v-on:long-press="onLongPress"
