@@ -6,7 +6,7 @@
       </div>
 
       <div class="flex flex-col py-2 pr-4">
-        <p class="text-sm mb-1 ion-activatable ripple-parent" @click="onClick" @contextmenu="onLongPress" >
+        <p class="text-sm mb-1 ion-activatable ripple-parent" @click="onClick" @contextmenu="emit('longPress', thread)" >
           {{thread.title}}
           <ion-ripple-effect></ion-ripple-effect>
         </p>
@@ -34,6 +34,8 @@ const props = defineProps({
   thread: Object,
 })
 
+const emit = defineEmits(['longPress'])
+
 const router = useRouter()
 
 const threadIconUrl = computed(() => {
@@ -48,33 +50,6 @@ const onClick = () => {
 
 const onUnreadButtonClick = () => {
   router.push(`/thread/${props.thread.id}/${unreadPostPage(props.thread.unreadPostCount, props.thread.postCount)}#post-${props.thread.firstUnreadId}`)
-}
-
-const onLongPress = async () => {
-  const actionSheet = await actionSheetController
-      .create({
-        buttons: [
-          {
-            text: 'Jump to page',
-            role: 'jump',
-            icon: `data:image/svg+xml;utf8,<svg style="width:24px;height:24px" viewBox="0 0 24 24">
-<path fill="currentColor" d="M21.5 14.5L16 20L10.5 14.5L11.91 13.09L15 16.17V10.5C15 8 13 6 10.5 6S6 8 6 10.5V18H4V10.5C4 6.91 6.91 4 10.5 4S17 6.91 17 10.5V16.17L20.09 13.08L21.5 14.5Z" />
-</svg>`,
-            id: 'jump-to-page-button',
-            data: {
-              type: 'delete'
-            },
-            handler: async () => {
-              const totalPages = Math.ceil(props.thread.postCount / 20)
-              let picker = await numberPicker(1, totalPages, 1, {}, (val) => {
-                router.push(`/thread/${props.thread.id}/${val}`)
-              })
-              await picker.present()
-            },
-          },
-        ],
-      });
-  await actionSheet.present();
 }
 </script>
 
