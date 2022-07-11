@@ -46,7 +46,20 @@
           v-model:page="page"
           :total-count="thread.postCount"/>
 
-        <div class="p-2">
+        <div
+          v-motion
+          :initial="initialState"
+          :enter="{
+            opacity: 1, y: 0,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 30,
+              mass: 0.5,
+            },
+          }"
+          v-if="thread.posts.length"
+          class="p-2">
           <post-list-item
             v-for="post in thread.posts"
             :key="post.id"
@@ -94,6 +107,13 @@ const hasScrolledToPost = ref(false)
 const getContent = () => {
   return document.querySelector('#thread-content')
 }
+
+const initialState = computed(() => {
+  if (route.hash) {
+    return { opacity: 0, y: 0 }
+  }
+  return { opacity: 0, y: 100 }
+})
 
 
 onMounted(async () => {
@@ -231,8 +251,11 @@ const updateReadThread = () => {
 watch(
   page,
   async (newPage, oldPage) => {
-    loadThread()
-    getContent().scrollToTop(500)
+    await loadThread()
+    await nextTick(() => {
+      getContent().scrollToTop(500)
+    })
+
   }
 )
 
