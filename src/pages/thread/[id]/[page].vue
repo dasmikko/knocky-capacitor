@@ -44,6 +44,7 @@
             v-for="post in thread.posts"
             :key="post.id"
             :post="post"
+            :read-thread-last-seen="thread.readThreadLastSeen"
           />
         </div>
 

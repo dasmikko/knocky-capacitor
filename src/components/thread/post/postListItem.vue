@@ -1,7 +1,12 @@
 <template>
   <div class="bg-knockoutGray-800 mb-4 rounded" :id="`post-${post.id}`">
     <header>
-      <div class="user-info">
+      <div
+        class="user-info"
+        :class="{
+          'is-new': postIsNew
+        }"
+      >
         <img class="mr-4" :src="`https://cdn.knockout.chat/image/${post.user.avatarUrl}`" alt="">
         <Username class="font-bold" :user="post.user" />
       </div>
@@ -65,6 +70,7 @@ import * as timeago from 'timeago.js';
 
 const props = defineProps({
   containerRef: Object,
+  readThreadLastSeen: String,
   post: Object,
 })
 
@@ -78,6 +84,11 @@ const postIsEdited = computed(() => {
   return props.post.createdAt !== props.post.updatedAt
 })
 
+const postIsNew = computed(() => {
+  if (!props.readThreadLastSeen) return false
+  return new Date(props.readThreadLastSeen) < new Date(props.post.createdAt)
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -86,6 +97,10 @@ const postIsEdited = computed(() => {
 
     .user-info {
       @apply h-full relative z-20 p-2 flex items-center;
+
+      &.is-new {
+        @apply border-l-2 border-blue-400;
+      }
 
       img {
         @apply h-10;
