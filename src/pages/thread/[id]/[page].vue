@@ -156,13 +156,6 @@ watch(
   async (newPage, oldPage) => {
     loadThread()
     getContent().scrollToTop(500)
-
-    // Update the page inside the url
-    history.pushState(
-      {},
-      null,
-      `/thread/${route.params.id}/${newPage}`
-    );
   }
 )
 

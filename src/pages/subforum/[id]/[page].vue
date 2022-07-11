@@ -104,13 +104,6 @@ export default {
       async (newPage, oldPage) => {
         loadSubforum()
         getContent().scrollToTop(500)
-
-        // Update the page inside the url
-        history.pushState(
-          {},
-          null,
-          `/subforum/${route.params.id}/${newPage}`
-        );
       }
     )
 
