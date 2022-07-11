@@ -156,5 +156,9 @@
   
     --ion-card-background: #1e1e1e;
     --progress-background: #ff0000;
+
+    a {
+      @apply text-blue-400;
+    }
     
   }

@@ -1,8 +1,8 @@
 <template>
   <div 
-    class="bg-neutral-700 relative border border-neutral-900 rounded overflow-hidden"
+    class="bg-knockoutGray-700 relative border border-neutral-900 rounded overflow-hidden"
   > 
-    <header class="bg-neutral-800 p-2">{{node.shortcode.properties.username}} posted:</header>
+    <header class="bg-knockoutGray-800 p-2">{{node.shortcode.properties.username}} posted:</header>
     <div class="content p-2"
       :class="{
         'expanded': expanded
@@ -18,7 +18,7 @@
       <span v-else>{{node.text}}</span>
     </div>
     <div class="expander" @click="expanded = !expanded">
-      <div class="bg-neutral-700 w-full flex justify-center items-center absolute bottom-0 p-2">
+      <div class="bg-knockoutGray-700 w-full flex justify-center items-center absolute bottom-0 p-1">
         <chevron-down-icon v-if="!expanded"/>
         <chevron-up-icon v-else/>
       </div>

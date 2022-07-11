@@ -51,6 +51,7 @@
             v-for="post in thread.posts"
             :key="post.id"
             :post="post"
+            :read-thread-last-seen="thread.readThreadLastSeen"
           />
         </div>
 
@@ -219,10 +220,8 @@ const updateAlerts = () => {
 // Read thread
 const updateReadThread = () => {
   const lastPostDate = thread.value.posts[thread.value.posts.length - 1].createdAt;
-  console.log(thread.value.readThreadLastSeen, lastPostDate)
   if (thread.value.readThreadLastSeen == null ||
     new Date(thread.value.readThreadLastSeen) < new Date(lastPostDate)) {
-    console.log('Update read thread')
     readThreads(thread.value.id, lastPostDate)
   }
 }
@@ -234,13 +233,6 @@ watch(
   async (newPage, oldPage) => {
     loadThread()
     getContent().scrollToTop(500)
-
-    // Update the page inside the url
-    history.pushState(
-      {},
-      null,
-      `/thread/${route.params.id}/${newPage}`
-    );
   }
 )
 

@@ -1,6 +1,6 @@
 <template>
   <div class="forum-list-item">
-    <header class="p-2 flex ion-activatable ripple-parent bg-neutral-800" @click="router.push(`/subforum/${item.id}/1`)">
+    <header class="p-2 flex ion-activatable ripple-parent bg-knockoutGray-700" @click="router.push(`/subforum/${item.id}/1`)">
       <div class="flex-1">
         <p class="text-lg font-bold">{{item.name}}</p>
         <div class="flex text-xs">
@@ -59,7 +59,7 @@ export default {
 
 <style lang="scss">
   .forum-list-item {
-    @apply bg-neutral-900 rounded mb-2 overflow-hidden;
+    @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
 
     .stats {
       @apply relative;
