@@ -46,12 +46,6 @@ export default {
       }
     });
 
-    useBackButton(-1, () => {
-      if (!ionRouter.canGoBack()) {
-        App.exitApp();
-      }
-    });
-
     const checkAuthState = async () => {
       try {
         const syncData = await getSyncData()
