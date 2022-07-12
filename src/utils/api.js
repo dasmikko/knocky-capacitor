@@ -100,6 +100,15 @@ export function createAlert (threadId, lastPostNumber) {
   })
 }
 
+export function unsubscribe (threadId) {
+  return KnockoutApiCall('delete', {
+    url: `/v2/alerts/${threadId}`,
+    data: {
+      threadId,
+    }
+  })
+}
+
 export function readThreads (threadId, lastSeen) {
   return KnockoutApiCall('post', {
     url: `/readThreads`,

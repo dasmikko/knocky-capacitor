@@ -97,7 +97,20 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>   
 
-      <ul class="p-2">
+      <ul
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :enter="{
+          opacity: 1, y: 0,
+          transition: {
+            type: 'spring',
+            stiffness: 250,
+            damping: 30,
+            mass: 0.5,
+          },
+        }"
+        v-if="items.length"
+        class="p-2">
         <li v-for="item in items">
           <forum-list-item
             :item="item"/>

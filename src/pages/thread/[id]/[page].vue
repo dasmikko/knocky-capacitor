@@ -19,9 +19,16 @@
               <template #icon><ReloadIcon/></template>
               Reload
             </PopoverListItem>
+            <PopoverListItem v-if="!thread.subscribed" @click="subscribeThread">
+              <template #icon><BellIcon/></template>
+              Subscribe
+            </PopoverListItem>
+            <PopoverListItem v-else @click="unsubscribeThread">
+              <template #icon><BellOffIcon/></template>
+              Unsubscribe
+            </PopoverListItem>
           </ion-list>
         </ion-popover>
-
         <ion-progress-bar v-if="isFetching" type="indeterminate"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
@@ -39,7 +46,20 @@
           v-model:page="page"
           :total-count="thread.postCount"/>
 
-        <div class="p-2">
+        <div
+          v-motion
+          :initial="initialState"
+          :enter="{
+            opacity: 1, y: 0,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 30,
+              mass: 0.5,
+            },
+          }"
+          v-if="thread.posts.length"
+          class="p-2">
           <post-list-item
             v-for="post in thread.posts"
             :key="post.id"
@@ -62,12 +82,14 @@
 
 import { useRoute, useRouter } from 'vue-router';
 import {onMounted, ref, watch, computed, nextTick} from 'vue'
-import {createAlert, getThread, readThreads} from '../../../utils/api'
+import {createAlert, getThread, readThreads, unsubscribe} from '../../../utils/api'
 import PostListItem from '../../../components/thread/post/postListItem.vue';
 import Pagination from '../../../components/shared/pagination/pagination.vue'
 import PopoverListItem from '../../../components/shared/popoverListItem.vue'
-import { toastController } from '@ionic/vue'
+import { toastController, loadingController } from '@ionic/vue'
 import ReloadIcon from 'vue-material-design-icons/Reload.vue'
+import BellIcon from 'vue-material-design-icons/Bell.vue'
+import BellOffIcon from 'vue-material-design-icons/BellOff.vue'
 
 import {
   ellipsisHorizontal,
@@ -85,6 +107,13 @@ const hasScrolledToPost = ref(false)
 const getContent = () => {
   return document.querySelector('#thread-content')
 }
+
+const initialState = computed(() => {
+  if (route.hash) {
+    return { opacity: 0, y: 0 }
+  }
+  return { opacity: 0, y: 100 }
+})
 
 
 onMounted(async () => {
@@ -129,6 +158,74 @@ const doRefresh = async (event) => {
   if (event) event.target.complete();
 }
 
+const subscribeThread = async () => {
+  const lastPostNumber = thread.value.posts[thread.value.posts.length - 1].threadPostNumber;
+
+  const loadingDialog = await loadingController.create({
+    message: 'Subscribing thread...',
+  })
+
+  loadingDialog.present()
+
+  try {
+    // Subscribe to the thread
+    await createAlert(thread.value.id, lastPostNumber)
+
+    // Show a toast
+    let toast = await toastController.create({
+      message: 'Successfully subscribed to thread.',
+      color: 'success',
+      duration: 2000
+    })
+    toast.present()
+
+    // Refresh thread
+    doRefresh()
+  } catch(e) {
+    let toast = await toastController.create({
+        message: 'Failed to subscribe to thread.',
+        color: 'danger',
+        duration: 2000
+      })
+      toast.present()
+  } finally {
+    loadingDialog.dismiss()
+  }
+
+
+}
+
+const unsubscribeThread = async () => {
+  const loadingDialog = await loadingController.create({
+    message: 'Unsubscribing thread...',
+  })
+
+  loadingDialog.present()
+
+  try {
+    await unsubscribe(thread.value.id)
+
+    // Show a toast
+    let toast = await toastController.create({
+      message: 'Successfully unsubscribed thread.',
+      color: 'success',
+      duration: 2000
+    })
+    toast.present()
+
+    doRefresh()
+  } catch (e) {
+    let toast = await toastController.create({
+      message: 'Failed to unsubscribe thread.',
+      color: 'danger',
+      duration: 2000
+    })
+    toast.present()
+  } finally {
+    loadingDialog.dismiss()
+  }
+}
+
 // Subscriptions
 const updateAlerts = () => {
   const lastPostNumber = thread.value.posts[thread.value.posts.length - 1].threadPostNumber;
@@ -155,8 +252,11 @@ const updateReadThread = () => {
 watch(
   page,
   async (newPage, oldPage) => {
-    loadThread()
-    getContent().scrollToTop(500)
+    await loadThread()
+    await nextTick(() => {
+      getContent().scrollToTop(500)
+    })
+
   }
 )
 

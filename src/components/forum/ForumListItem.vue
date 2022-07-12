@@ -13,7 +13,7 @@
       </div>
       <ion-ripple-effect></ion-ripple-effect>
     </header>
-    <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses">
+    <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses" @click="router.push(`/thread/${item.lastPost.thread.id}/${item.lastPost.page}#post-${item.lastPost.id}`)">
       <p class="text-sm truncate text-ellipsis overflow-hidden">{{item.lastPost.thread.title}}</p>
       <p class="text-xs text-neutral-400">Last post by <Username :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
       <ion-ripple-effect></ion-ripple-effect>

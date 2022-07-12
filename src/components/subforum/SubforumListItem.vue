@@ -1,21 +1,28 @@
 <template>
   <div class="subforum-list-item ">
     <div class="flex">
-      <div class="w-12 h-auto flex-shrink-0 mr-4 p-2 flex items-center bg-knockoutGray-700">
+      <div class="w-12 h-auto flex-shrink-0 p-2 flex items-center bg-knockoutGray-700">
         <img class="max-w-full" :src="threadIconUrl" alt=""/>
       </div>
 
-      <div class="flex flex-col py-2 pr-4">
-        <p class="text-sm mb-1 ion-activatable ripple-parent" @click="onClick" @contextmenu="onLongPress" >
-          {{thread.title}}
+      <div class="relative flex flex-col w-full ">
+        <div
+          @click="onClick" @contextmenu="emit('longPress', thread)"
+          class="background-trigger ion-activatable ripple-parent">
           <ion-ripple-effect></ion-ripple-effect>
-        </p>
-        <div class="unreadPosts-container">
-          <div v-if="thread.unreadPostCount"  class="inner ion-activatable ripple-parent" @click="onUnreadButtonClick">
-            {{thread.unreadPostCount}} new posts
-            <ion-ripple-effect></ion-ripple-effect></div>
         </div>
-        <p class="text-xs text-neutral-400"><username :user="thread.user"/></p>
+        <div class="py-2 px-4">
+          <p class="text-sm mb-1">
+            {{thread.title}}
+
+          </p>
+          <div class="unreadPosts-container">
+            <div v-if="thread.unreadPostCount || unreadPosts" class="inner ion-activatable ripple-parent" @click="onUnreadButtonClick">
+              {{thread.unreadPostCount || unreadPosts}} new {{thread.unreadPostCount === 1 || unreadPosts === 1 ? 'post' : 'posts'}}
+              <ion-ripple-effect></ion-ripple-effect></div>
+          </div>
+          <p class="text-xs text-neutral-400"><username :user="thread.user"/></p>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +39,11 @@ import { unreadPostPage } from '../../utils/postsPerPage.js'
 
 const props = defineProps({
   thread: Object,
+  firstUnreadId: Number,
+  unreadPosts: Number
 })
+
+const emit = defineEmits(['longPress'])
 
 const router = useRouter()
 
@@ -47,40 +58,22 @@ const onClick = () => {
 }
 
 const onUnreadButtonClick = () => {
-  router.push(`/thread/${props.thread.id}/${unreadPostPage(props.thread.unreadPostCount, props.thread.postCount)}#post-${props.thread.firstUnreadId}`)
-}
+  if (props.firstUnreadId) {
+    router.push(`/thread/${props.thread.id}/${unreadPostPage(props.unreadPosts, props.thread.postCount)}#post-${props.firstUnreadId}`)
+  } else {
+    router.push(`/thread/${props.thread.id}/${unreadPostPage(props.thread.unreadPostCount, props.thread.postCount)}#post-${props.thread.firstUnreadId}`)
+  }
 
-const onLongPress = async () => {
-  const actionSheet = await actionSheetController
-      .create({
-        buttons: [
-          {
-            text: 'Jump to page',
-            role: 'jump',
-            icon: `data:image/svg+xml;utf8,<svg style="width:24px;height:24px" viewBox="0 0 24 24">
-<path fill="currentColor" d="M21.5 14.5L16 20L10.5 14.5L11.91 13.09L15 16.17V10.5C15 8 13 6 10.5 6S6 8 6 10.5V18H4V10.5C4 6.91 6.91 4 10.5 4S17 6.91 17 10.5V16.17L20.09 13.08L21.5 14.5Z" />
-</svg>`,
-            id: 'jump-to-page-button',
-            data: {
-              type: 'delete'
-            },
-            handler: async () => {
-              const totalPages = Math.ceil(props.thread.postCount / 20)
-              let picker = await numberPicker(1, totalPages, 1, {}, (val) => {
-                router.push(`/thread/${props.thread.id}/${val}`)
-              })
-              await picker.present()
-            },
-          },
-        ],
-      });
-  await actionSheet.present();
 }
 </script>
 
 <style lang="scss" scoped>
   .subforum-list-item {
     @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
+
+    .background-trigger {
+      @apply absolute h-full w-full top-0 -mr-4;
+    }
   }
 
   .unreadPosts-container {
