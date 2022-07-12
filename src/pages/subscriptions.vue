@@ -20,6 +20,8 @@
         <li v-for="item in items">
           <SubforumListItem
             v-on:long-press="onLongPress"
+            :first-unread-id="item.firstUnreadId"
+            :unread-posts="item.unreadPosts"
             :thread="item.thread"/>
         </li>
       </ul>

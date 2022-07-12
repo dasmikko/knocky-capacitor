@@ -17,8 +17,8 @@
 
           </p>
           <div class="unreadPosts-container">
-            <div v-if="thread.unreadPostCount" class="inner ion-activatable ripple-parent" @click="onUnreadButtonClick">
-              {{thread.unreadPostCount}} new posts
+            <div v-if="thread.unreadPostCount || unreadPosts" class="inner ion-activatable ripple-parent" @click="onUnreadButtonClick">
+              {{thread.unreadPostCount || unreadPosts}} new {{thread.unreadPostCount === 1 || unreadPosts === 1 ? 'post' : 'posts'}}
               <ion-ripple-effect></ion-ripple-effect></div>
           </div>
           <p class="text-xs text-neutral-400"><username :user="thread.user"/></p>
@@ -39,6 +39,8 @@ import { unreadPostPage } from '../../utils/postsPerPage.js'
 
 const props = defineProps({
   thread: Object,
+  firstUnreadId: Number,
+  unreadPosts: Number
 })
 
 const emit = defineEmits(['longPress'])
@@ -56,7 +58,12 @@ const onClick = () => {
 }
 
 const onUnreadButtonClick = () => {
-  router.push(`/thread/${props.thread.id}/${unreadPostPage(props.thread.unreadPostCount, props.thread.postCount)}#post-${props.thread.firstUnreadId}`)
+  if (props.firstUnreadId) {
+    router.push(`/thread/${props.thread.id}/${unreadPostPage(props.unreadPosts, props.thread.postCount)}#post-${props.firstUnreadId}`)
+  } else {
+    router.push(`/thread/${props.thread.id}/${unreadPostPage(props.thread.unreadPostCount, props.thread.postCount)}#post-${props.thread.firstUnreadId}`)
+  }
+
 }
 </script>
 
