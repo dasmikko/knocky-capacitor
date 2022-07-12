@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 import { ShortcodeTree, ShortcodeNode, TextNode } from 'shortcode-tree';
-import { computed } from '@vue/reactivity';
+import {useIntersectionObserver} from '@vueuse/core'
 
 export default {
   name: 'TwitterNode',
@@ -13,7 +13,16 @@ export default {
     url: String,
   },
   setup(props) {
+    const tweetIsLoaded = ref(false)
     const tweetRef = ref(null)
+    const targetIsVisible = ref(false)
+
+    const { stop } = useIntersectionObserver(
+      tweetRef,
+      ([{ isIntersecting }], observerElement) => {
+        targetIsVisible.value = isIntersecting
+      },
+    )
 
     const getTweetId = (src) => {
       const twitterRegx = /^https?:\/\/(?:mobile\.)?twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/;
@@ -28,7 +37,7 @@ export default {
 
     const tweetId = computed(() => getTweetId(props.url))
 
-    onMounted(() => {
+    const initTweet = () => {
       window.twttr = ((d, s, id) => {
         const fjs = d.getElementsByTagName(s)[0];
         const t = window.twttr || {};
@@ -51,8 +60,20 @@ export default {
           theme: 'dark',
         });
       });
+    }
 
-    })
+    watch(
+      targetIsVisible,
+      (newIsVisible) => {
+        if (newIsVisible) {
+          if (!tweetIsLoaded.value) {
+            initTweet()
+            tweetIsLoaded.value = true
+          }
+
+        }
+      }
+    )
 
     return {
       tweetRef
