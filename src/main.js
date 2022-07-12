@@ -48,7 +48,8 @@ import {
   IonLabel,
   IonRippleEffect,
   IonIcon,
-  IonPopover
+  IonPopover,
+  IonImg,
 } from '@ionic/vue';
 
 import Schema from './components/bbcode/schema.vue'
@@ -95,6 +96,7 @@ app.component('IonLabel', IonLabel)
 app.component('IonRippleEffect', IonRippleEffect)
 app.component('IonIcon', IonIcon)
 app.component('IonPopover', IonPopover)
+app.component('IonImg', IonImg)
 app.component('Schema', Schema)
 
 router.isReady().then(() => {

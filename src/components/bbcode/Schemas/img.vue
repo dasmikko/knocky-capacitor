@@ -4,10 +4,10 @@
     :href="url" 
     :data-pswp-width="imageSize.width"
     :data-pswp-height="imageSize.height" >
-    <img
+    <ion-img
       :src="url" 
       ref="img"
-      @load="onImageLoad"
+      @ionImgDidLoad="onImageLoad"
       alt=""/>
   </a>
 </template>
@@ -31,8 +31,9 @@ export default {
     })
 
     const onImageLoad = (ev) => {
-      imageSize.width = img.value.naturalWidth
-      imageSize.height = img.value.naturalHeight
+      console.log(ev)
+      imageSize.width = ev.target.clientWidth
+      imageSize.height = ev.target.clientHeight
     }
 
     return {
