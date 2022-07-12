@@ -6,6 +6,7 @@ import App from './App.vue';
 import { GesturePlugin } from '@vueuse/gesture'
 import { MotionPlugin } from '@vueuse/motion'
 import { createPinia } from 'pinia'
+import VueLazyload from 'vue-lazyload'
 import 'photoswipe/style.css';
 
 import './assets/tailwind.css'
@@ -73,6 +74,9 @@ app.use(IonicVue, {
 app.use(router);
 app.use(GesturePlugin)
 app.use(MotionPlugin)
+app.use(VueLazyload, {
+  lazyComponent: true
+});
 app.use(pinia)
 
 app.component('IonMenu', IonMenu)
