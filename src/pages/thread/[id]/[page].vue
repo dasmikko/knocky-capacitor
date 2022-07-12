@@ -59,7 +59,7 @@
             },
           }"
           v-if="thread.posts.length"
-          class="p-2">
+          class="p-2 posts">
           <post-list-item
             v-for="post in thread.posts"
             :key="post.id"
@@ -270,5 +270,7 @@ watch(
 
 
 <style lang="scss">
-
+  .posts {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
 </style>

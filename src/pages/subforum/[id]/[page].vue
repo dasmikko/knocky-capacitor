@@ -37,7 +37,7 @@
             },
           }"
           v-if="subforum.threads.length"
-          class="p-2">
+          class="p-2 threads">
           <subforum-list-item
             v-for="thread in subforum.threads"
             v-on:long-press="onLongPress"
@@ -165,5 +165,7 @@ export default {
 
 
 <style lang="scss">
-
+  .threads {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
 </style>
