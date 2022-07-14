@@ -21,7 +21,14 @@
               {{thread.unreadPostCount || unreadPosts}} new {{thread.unreadPostCount === 1 || unreadPosts === 1 ? 'post' : 'posts'}}
               <ion-ripple-effect></ion-ripple-effect></div>
           </div>
-          <p class="text-xs text-neutral-400"><username :user="thread.user"/></p>
+          <p class="text-xs text-neutral-400">
+            <span
+              v-if="thread.tags && thread.tags.length"
+              v-for="tag in Object.values(thread.tags[0])"
+              class="mr-2 bg-gray-600 text-white p-1"
+            >{{ tag }}</span>
+            <username :user="thread.user"/>
+          </p>
         </div>
       </div>
     </div>
