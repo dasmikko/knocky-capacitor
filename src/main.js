@@ -51,6 +51,9 @@ import {
   IonIcon,
   IonPopover,
   IonImg,
+    IonGrid,
+    IonRow,
+    IonCol
 } from '@ionic/vue';
 
 import Schema from './components/bbcode/schema.vue'
@@ -100,6 +103,9 @@ app.component('IonLabel', IonLabel)
 app.component('IonRippleEffect', IonRippleEffect)
 app.component('IonIcon', IonIcon)
 app.component('IonPopover', IonPopover)
+app.component('IonGrid', IonGrid)
+app.component('IonRow', IonRow)
+app.component('IonCol', IonCol)
 app.component('IonImg', IonImg)
 app.component('Schema', Schema)
 

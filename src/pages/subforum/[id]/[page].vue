@@ -16,42 +16,44 @@
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      
-      <template v-if="subforum">
-        <Pagination
-          class="pt-4 pb-2"
-          v-model:page="page"
-          :per-page="40"
-          :total-count="subforum.totalThreads"/>
 
-        <div
-          v-motion
-          :initial="{ opacity: 0, y: 100 }"
-          :enter="{
-            opacity: 1, y: 0,
-            transition: {
-              type: 'spring',
-              stiffness: 250,
-              damping: 30,
-              mass: 0.5,
-            },
-          }"
-          v-if="subforum.threads.length"
-          class="p-2 threads">
-          <subforum-list-item
-            v-for="thread in subforum.threads"
-            v-on:long-press="onLongPress"
-            :key="thread.id"
-            :thread="thread"
-          />
-        </div>
+      <div class="container mx-auto">
+        <template v-if="subforum">
+          <Pagination
+            class="pt-4 pb-2"
+            v-model:page="page"
+            :per-page="40"
+            :total-count="subforum.totalThreads"/>
 
-        <Pagination
-          class="pb-4"
-          v-model:page="page"
-          :per-page="40"
-          :total-count="subforum.totalThreads"/>
-      </template>
+          <div
+            v-motion
+            :initial="{ opacity: 0, y: 100 }"
+            :enter="{
+              opacity: 1, y: 0,
+              transition: {
+                type: 'spring',
+                stiffness: 250,
+                damping: 30,
+                mass: 0.5,
+              },
+            }"
+            v-if="subforum.threads.length"
+            class="p-2 threads">
+            <subforum-list-item
+              v-for="thread in subforum.threads"
+              v-on:long-press="onLongPress"
+              :key="thread.id"
+              :thread="thread"
+            />
+          </div>
+
+          <Pagination
+            class="pb-4"
+            v-model:page="page"
+            :per-page="40"
+            :total-count="subforum.totalThreads"/>
+        </template>
+      </div>
     </ion-content>
   </ion-page>
 </template>
