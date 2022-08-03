@@ -40,7 +40,8 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
-      <template v-if="thread">
+      <div class="container mx-auto">
+        <template v-if="thread">
         <Pagination
           class="pt-4 pb-2"
           v-model:page="page"
@@ -73,6 +74,7 @@
           v-model:page="page"
           :total-count="thread.postCount"/>
       </template>
+      </div>
     </ion-content>
   </ion-page>
 </template>

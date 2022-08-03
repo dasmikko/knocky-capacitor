@@ -95,27 +95,31 @@
       id="main-content">   
       <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>   
+      </ion-refresher>
 
-      <ul
-        v-motion
-        :initial="{ opacity: 0, y: 100 }"
-        :enter="{
-          opacity: 1, y: 0,
-          transition: {
-            type: 'spring',
-            stiffness: 250,
-            damping: 30,
-            mass: 0.5,
-          },
-        }"
-        v-if="items.length"
-        class="p-2">
-        <li v-for="item in items">
-          <forum-list-item
-            :item="item"/>
-        </li>
-      </ul>
+      <div class="container mx-auto">
+        <ul
+          v-motion
+          :initial="{ opacity: 0, y: 100 }"
+          :enter="{
+            opacity: 1, y: 0,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 30,
+              mass: 0.5,
+            },
+          }"
+          v-if="items.length"
+          class="p-2 sm:grid sm:grid-cols-2 sm:gap-x-2">
+          <li
+              class="sm:flex-1"
+              v-for="item in items">
+            <forum-list-item
+              :item="item"/>
+          </li>
+        </ul>
+      </div>
     </ion-content>
   </ion-page>
 </template>
