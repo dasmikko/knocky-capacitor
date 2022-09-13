@@ -8,6 +8,7 @@
     <div class="pages" ref="paginationContent">
       <div class="page-button" :id="'page-'+pageNum"
           v-for="pageNum in totalPages"
+          :key="pageNum"
           :class="{ 'active': page === pageNum }"
           @click="onPageClick(pageNum)"
       >{{pageNum}}</div>
@@ -26,7 +27,7 @@ import MenuRightIcon from 'vue-material-design-icons/MenuRight.vue'
 import {computed, nextTick, onMounted, watch, ref} from 'vue'
 
 export default {
-  name: 'pagination',
+  name: 'PaginationComponent',
   components: {
     MenuLeftIcon,
     MenuRightIcon

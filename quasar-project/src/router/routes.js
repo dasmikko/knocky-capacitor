@@ -8,6 +8,14 @@ const routes = [
     ]
   },
 
+  {
+    path: '/subforum/:id/:page',
+    component: () => import('layouts/PageLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/subforum/SubforumPage.vue') }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -1,13 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
-
-    {{ items }}
-
+  <q-page padding>
     <div class="forum-items">
       <ForumListItem
         v-for="item in items"
@@ -23,13 +15,13 @@ import {getForum} from '../utils/api.js'
 import { useQuasar } from 'quasar'
 import { ref, onMounted } from 'vue'
 import ForumListItem from '../components/forum/ForumListItem.vue'
+const $q = useQuasar()
 
-console.log('hello?')
 
 const items = ref([])
 const isFetching = ref(false)
 
-const $q = useQuasar()
+
 
 const loadSubforums = async () => {
   try {

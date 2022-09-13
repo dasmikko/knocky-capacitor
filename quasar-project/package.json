@@ -6,6 +6,7 @@
   "author": "dasmikko <dasmikko@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
@@ -16,6 +17,7 @@
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
+    "vue-material-design-icons": "^5.1.2",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {

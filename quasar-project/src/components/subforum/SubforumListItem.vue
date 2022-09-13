@@ -12,23 +12,22 @@
         <div
           @click="onClick" @contextmenu="emit('longPress', thread)"
           class="background-trigger ion-activatable ripple-parent">
-          <ion-ripple-effect></ion-ripple-effect>
         </div>
         <div class="py-2 px-4">
           <p class="text-sm mb-1">
-            <NoteIcon v-if="thread.pinned" size="14" class="inline-block align-text-top text-green-500"/>
-            <LockIcon v-if="thread.locked" size="14" class="inline-block align-text-top text-yellow-500"/>
+            <NoteIcon v-if="thread.pinned" :size="14" class="inline-block align-text-top text-green-500"/>
+            <LockIcon v-if="thread.locked" :size="14" class="inline-block align-text-top text-yellow-500"/>
             {{thread.title}}
           </p>
           <div class="unreadPosts-container">
             <div v-if="thread.unreadPostCount || unreadPosts" class="inner ion-activatable ripple-parent" @click="onUnreadButtonClick">
               {{thread.unreadPostCount || unreadPosts}} new {{thread.unreadPostCount === 1 || unreadPosts === 1 ? 'post' : 'posts'}}
-              <ion-ripple-effect></ion-ripple-effect></div>
+            </div>
           </div>
-          <p class="text-xs text-neutral-400">
+          <p class="text-xs text-neutral-400" v-if="thread.tags && thread.tags.length">
             <span
-              v-if="thread.tags && thread.tags.length"
               v-for="tag in Object.values(thread.tags[0])"
+              :key="tag"
               class="mr-2 bg-gray-600 text-white p-1"
             >{{ tag }}</span>
             <username :user="thread.user"/>
@@ -40,11 +39,10 @@
 </template>
 
 <script setup>
-import { IonRippleEffect, actionSheetController, pickerController } from '@ionic/vue';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { getIcon } from '../../utils/icons';
-import Username from '../shared/username.vue';
+import Username from '../shared/UsernameLabel.vue';
 import { numberPicker } from "../../utils/picker";
 import { unreadPostPage } from '../../utils/postsPerPage.js'
 import NoteIcon from 'vue-material-design-icons/Note.vue'

@@ -1,6 +1,6 @@
 <template>
-  <div class="forum-list-item">
-    <header class="p-2 flex ion-activatable ripple-parent bg-knockoutGray-700" @click="router.push(`/subforum/${item.id}/1`)">
+  <div class="forum-list-item" :class="{dark: isDark}">
+    <header v-ripple class="p-2 flex relative bg-knockoutGray-700" @click="router.push(`/subforum/${item.id}/1`)">
       <div class="flex-1">
         <p class="text-lg font-bold">{{item.name}}</p>
         <div class="flex text-xs">
@@ -11,7 +11,6 @@
       <div class="flex items-center justify-end">
         <img :src="item.icon"  alt="" class="h-11">
       </div>
-      <ion-ripple-effect></ion-ripple-effect>
     </header>
     <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses" @click="router.push(`/thread/${item.lastPost.thread.id}/${item.lastPost.page}#post-${item.lastPost.id}`)">
       <p class="text-sm truncate text-ellipsis overflow-hidden">{{item.lastPost.thread.title}}</p>
@@ -29,6 +28,7 @@ import * as timeago from 'timeago.js';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import UsernameLabel from '../shared/UsernameLabel.vue';
+import { useQuasar } from 'quasar'
 
 export default {
   name: "ForumListItem",
@@ -42,16 +42,22 @@ export default {
     item: Object,
   },
   setup (props) {
+    const $q = useQuasar()
     const router = useRouter()
     const statsClasses = computed(() => {
       return ['id-'+props.item.id]
+    })
+
+    const isDark = computed(() => {
+      return $q.dark.isActive
     })
 
 
     return {
       router,
       timeago,
-      statsClasses
+      statsClasses,
+      isDark
     }
   }
 }
@@ -60,6 +66,10 @@ export default {
 <style lang="scss">
   .forum-list-item {
     @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
+
+    &.dark {
+      @apply text-white;
+    }
 
     .stats {
       @apply relative;
