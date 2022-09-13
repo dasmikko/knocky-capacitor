@@ -9,6 +9,7 @@ import { createPinia } from 'pinia'
 import VueLazyload from 'vue-lazyload'
 import 'photoswipe/style.css';
 
+
 import './assets/tailwind.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -81,6 +82,7 @@ app.use(VueLazyload, {
   lazyComponent: true
 });
 app.use(pinia)
+
 
 app.component('IonMenu', IonMenu)
 app.component('IonMenuButton', IonMenuButton)
