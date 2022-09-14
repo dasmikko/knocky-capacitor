@@ -62,14 +62,14 @@ export default {
 
 <style lang="scss">
   .forum-list-item {
-    @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
+    @apply tw-bg-knockoutGray-800 tw-rounded tw-mb-2 tw-overflow-hidden;
 
     &.dark {
-      @apply text-white;
+      @apply tw-text-white;
     }
 
     .stats {
-      @apply relative;
+      @apply tw-relative;
 
       &::after {
         content: "";

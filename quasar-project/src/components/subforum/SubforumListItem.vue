@@ -80,20 +80,20 @@ const onUnreadButtonClick = () => {
 
 <style lang="scss" scoped>
   .subforum-list-item {
-    @apply bg-knockoutGray-800 rounded mb-2 overflow-hidden;
+    @apply tw-bg-knockoutGray-800 tw-rounded tw-mb-2 tw-overflow-hidden;
 
     .background-trigger {
-      @apply absolute h-full w-full top-0 -mr-4;
+      @apply tw-absolute tw-h-full tw-w-full tw-top-0 -tw-mr-4;
     }
 
     &.has-read {
-      @apply opacity-60;
+      @apply tw-opacity-60;
     }
   }
 
   .unreadPosts-container {
     .inner {
-      @apply bg-sky-600 inline-block rounded py-1 px-2 text-sm mt-1 mb-1;
+      @apply tw-bg-sky-600 tw-inline-block tw-rounded tw-py-1 tw-px-2 tw-text-sm tw-mt-1 tw-mb-1;
     }
 
   }

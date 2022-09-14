@@ -1,5 +1,8 @@
 <template>
-  <div class="pagination" v-show="totalPages > 1">
+  <q-pagination
+    :max="totalPages"
+    v-model="currentPage"/>
+  <!--<div v-if="false" class="pagination" v-show="totalPages > 1">
     <div class="start">
       <div class="page-button" :class="{ disabled: page === 1}" @click="onPageClick(page - 1)">
         <MenuLeftIcon/>
@@ -18,7 +21,7 @@
         <MenuRightIcon/>
       </div>
     </div>
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -29,8 +32,8 @@ import {computed, nextTick, onMounted, watch, ref} from 'vue'
 export default {
   name: 'PaginationComponent',
   components: {
-    MenuLeftIcon,
-    MenuRightIcon
+    //MenuLeftIcon,
+    //MenuRightIcon
   },
   props: {
     page: Number,
@@ -44,8 +47,17 @@ export default {
   setup(props, {emit}) {
     const paginationContent = ref(null)
 
+    const currentPage = computed({
+      get() {
+        return props.page
+      },
+      set(page) {
+        emit('update:page', page)
+      }
+    })
+
     const getContent = () => {
-      return document.querySelector('#pagination-content')
+      //return document.querySelector('#pagination-content')
     }
 
     const totalPages = computed(() => Math.ceil(props.totalCount / props.perPage))
@@ -56,6 +68,7 @@ export default {
 
     onMounted(() => {
       nextTick(() => {
+        return
         const pageButton = paginationContent.value.querySelector('#page-'+props.page)
         paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
       })
@@ -64,6 +77,7 @@ export default {
     watch(
       () => props.page,
       (page) => {
+        return
         const pageButton = paginationContent.value.querySelector('#page-'+page)
         paginationContent.value.scroll(pageButton.offsetLeft - (paginationContent.value.clientWidth / 2) - 28, 0)
       }
@@ -72,7 +86,8 @@ export default {
     return {
       totalPages,
       onPageClick,
-      paginationContent
+      paginationContent,
+      currentPage
     }
   }
 }
@@ -80,41 +95,41 @@ export default {
 
 <style lang="scss" scoped>
   .pagination {
-    @apply flex px-2;
+    @apply tw-flex tw-px-2;
 
     .pages {
-      @apply flex-1 flex flex-row overflow-auto;
+      @apply tw-flex-1 tw-flex tw-flex-row tw-overflow-auto;
 
       &::-webkit-scrollbar {
         display: none;
       }
 
       .page-button {
-        @apply mr-2;
+        @apply tw-mr-2;
 
         &:last-child {
-          @apply mr-0;
+          @apply tw-mr-0;
         }
       }
     }
 
     .start {
-      @apply mr-2;
+      @apply tw-mr-2;
     }
 
     .end {
-      @apply ml-2;
+      @apply tw-ml-2;
     }
 
     .page-button {
-      @apply bg-neutral-700 px-3 h-7 w-7 text-sm flex justify-center items-center rounded;
+      @apply tw-bg-neutral-700 tw-px-3 tw-h-7 tw-w-7 tw-text-sm tw-flex tw-justify-center tw-items-center tw-rounded;
 
       &.active {
-        @apply bg-neutral-500;
+        @apply tw-bg-neutral-500;
       }
 
       &.disabled {
-        @apply opacity-50 pointer-events-none;
+        @apply tw-opacity-50 tw-pointer-events-none;
       }
     }
   }
