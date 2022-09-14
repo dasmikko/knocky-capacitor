@@ -2,14 +2,14 @@
   <q-page padding>
     <template v-if="subforum">
       <Pagination
-        class="pt-4 pb-2"
+        class="tw-pb-2"
         v-model:page="page"
         :per-page="40"
         :total-count="subforum.totalThreads"/>
 
       <div
         v-if="subforum.threads.length"
-        class="p-2 threads">
+        class="tw-p-2 threads">
         <SubForumListItem
           v-for="thread in subforum.threads"
           v-on:long-press="onLongPress"
@@ -19,7 +19,6 @@
       </div>
 
       <Pagination
-        class="pb-4"
         v-model:page="page"
         :per-page="40"
         :total-count="subforum.totalThreads"/>

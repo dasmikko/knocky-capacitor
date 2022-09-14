@@ -3,20 +3,20 @@
     class="subforum-list-item"
     :class="{ 'has-read': thread.read && thread.hasRead && !(thread.unreadPostCount || unreadPosts) }"
   >
-    <div class="flex">
-      <div class="w-12 h-auto flex-shrink-0 p-2 flex items-center bg-knockoutGray-700">
-        <img class="max-w-full" :src="threadIconUrl" alt=""/>
+    <div class="tw-flex">
+      <div class="tw-w-12 tw-h-auto tw-flex-shrink-0 tw-p-2 tw-flex tw-items-center tw-bg-knockoutGray-700">
+        <img class="tw-max-w-full" :src="threadIconUrl" alt=""/>
       </div>
 
-      <div class="relative flex flex-col w-full ">
+      <div class="tw-relative tw-flex tw-flex-col tw-w-full ">
         <div
           @click="onClick" @contextmenu="emit('longPress', thread)"
-          class="background-trigger ion-activatable ripple-parent">
+          class="tw-background-trigger">
         </div>
-        <div class="py-2 px-4">
-          <p class="text-sm mb-1">
-            <NoteIcon v-if="thread.pinned" :size="14" class="inline-block align-text-top text-green-500"/>
-            <LockIcon v-if="thread.locked" :size="14" class="inline-block align-text-top text-yellow-500"/>
+        <div class="tw-py-2 tw-px-4">
+          <p class="tw-text-sm tw-mb-1">
+            <NoteIcon v-if="thread.pinned" :size="14" class="tw-inline-block tw-align-text-top tw-text-green-500"/>
+            <LockIcon v-if="thread.locked" :size="14" class="tw-inline-block tw-align-text-top tw-text-yellow-500"/>
             {{thread.title}}
           </p>
           <div class="unreadPosts-container">
@@ -24,11 +24,11 @@
               {{thread.unreadPostCount || unreadPosts}} new {{thread.unreadPostCount === 1 || unreadPosts === 1 ? 'post' : 'posts'}}
             </div>
           </div>
-          <p class="text-xs text-neutral-400" v-if="thread.tags && thread.tags.length">
+          <p class="tw-text-xs tw-text-neutral-400" v-if="thread.tags && thread.tags.length">
             <span
               v-for="tag in Object.values(thread.tags[0])"
               :key="tag"
-              class="mr-2 bg-gray-600 text-white p-1"
+              class="tw-mr-2 tw-bg-gray-600 tw-text-white tw-p-1"
             >{{ tag }}</span>
             <username :user="thread.user"/>
           </p>

@@ -1,27 +1,25 @@
 <template>
   <div class="forum-list-item" :class="{dark: isDark}">
-    <header v-ripple class="p-2 flex relative bg-knockoutGray-700" @click="router.push(`/subforum/${item.id}/1`)">
-      <div class="flex-1">
-        <p class="text-lg font-bold">{{item.name}}</p>
-        <div class="flex text-xs">
-          <div class="flex items-center mr-4"><ChatBubbleIcon :size="14" class="mr-1" /> {{item.totalThreads}}</div>
-          <div class="flex items-center "><ReplyAllIcon :size="14" class="mr-1"/> {{item.totalPosts}}</div>
+    <header v-ripple class="tw-p-2 tw-flex tw-relative tw-bg-knockoutGray-700" @click="router.push(`/subforum/${item.id}/1`)">
+      <div class="tw-flex-1">
+        <p class="tw-text-lg tw-font-bold">{{item.name}}</p>
+        <div class="tw-flex tw-text-xs">
+          <div class="tw-flex tw-items-center tw-mr-4"><ChatBubbleIcon :size="14" class="tw-mr-1" /> {{item.totalThreads}}</div>
+          <div class="tw-flex tw-items-center "><ReplyAllIcon :size="14" class="tw-mr-1"/> {{item.totalPosts}}</div>
         </div>
       </div>
-      <div class="flex items-center justify-end">
-        <img :src="item.icon"  alt="" class="h-11">
+      <div class="tw-flex tw-items-center tw-justify-end">
+        <img :src="item.icon"  alt="" class="tw-h-11">
       </div>
     </header>
-    <section class="stats p-2 ion-activatable ripple-parent" :class="statsClasses" @click="router.push(`/thread/${item.lastPost.thread.id}/${item.lastPost.page}#post-${item.lastPost.id}`)">
-      <p class="text-sm truncate text-ellipsis overflow-hidden">{{item.lastPost.thread.title}}</p>
-      <p class="text-xs text-neutral-400">Last post by <UsernameLabel :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
-      <ion-ripple-effect></ion-ripple-effect>
+    <section class="stats tw-p-2" :class="statsClasses" @click="router.push(`/thread/${item.lastPost.thread.id}/${item.lastPost.page}#post-${item.lastPost.id}`)">
+      <p class="tw-text-sm tw-truncate tw-text-ellipsis tw-overflow-hidden">{{item.lastPost.thread.title}}</p>
+      <p class="tw-text-xs tw-text-neutral-400">Last post by <UsernameLabel :user="item.lastPost.user"/> {{timeago.format(item.lastPost.updatedAt)}}</p>
     </section>
   </div>
 </template>
 
 <script>
-import { IonRippleEffect } from '@ionic/vue';
 import ChatBubbleIcon from 'vue-material-design-icons/Chat.vue';
 import ReplyAllIcon from 'vue-material-design-icons/ReplyAll.vue';
 import * as timeago from 'timeago.js';
@@ -33,7 +31,6 @@ import { useQuasar } from 'quasar'
 export default {
   name: "ForumListItem",
   components: {
-    IonRippleEffect,
     ChatBubbleIcon,
     ReplyAllIcon,
     UsernameLabel
